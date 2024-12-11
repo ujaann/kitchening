@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kitchening/common/styles.dart';
 import 'package:kitchening/view/splash_screen_view.dart';
 
 class App extends StatelessWidget {
@@ -8,7 +9,12 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Kitchening",
-      home: SplashScreenView(),
+      color: const Color(0xffF1E0C5),
+      theme: ThemeData(
+        scaffoldBackgroundColor: lightBrown,
+        inputDecorationTheme: const InputDecorationTheme(fillColor: Colors.white)
+      ),
+      home: const SplashScreenView(),
     );
   }
 }
