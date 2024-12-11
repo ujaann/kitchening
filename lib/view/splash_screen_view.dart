@@ -1,28 +1,28 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
-class SplashScreenView extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:kitchening/view/login_screen_view.dart';
+
+class SplashScreenView extends StatefulWidget {
   const SplashScreenView({super.key});
 
   @override
+  State<SplashScreenView> createState() => _SplashScreenViewState();
+}
+
+class _SplashScreenViewState extends State<SplashScreenView> {
+  @override
+  void initState() {
+    Timer.periodic(const Duration(seconds: 3), (_)=>Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>const LoginScreenView())));
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffF1E0C5),
       body: SafeArea(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text("Kitchening"),
-          Container(
-            height: 420,
-            
-            color: Colors.amberAccent,
+          child: Center(child: Image.asset("assets/images/logo.png"))          
           ),
-          Row(
-            children: [Icon(Icons.circle),Icon(Icons.circle),Icon(Icons.circle)],
-          ),
-          ElevatedButton(onPressed: () {}, child: const Text("LOGIN")),
-        ],
-      )),
     );
   }
 }
