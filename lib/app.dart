@@ -12,7 +12,7 @@ class App extends StatelessWidget {
       color: const Color(0xffF1E0C5),
       theme: ThemeData(
         scaffoldBackgroundColor: lightBrown,
-        inputDecorationTheme: const InputDecorationTheme(fillColor: Colors.white)
+        inputDecorationTheme: const InputDecorationTheme(filled: true,fillColor: Color(0xfffefefe))
       ),
       home: const SplashScreenView(),
     );

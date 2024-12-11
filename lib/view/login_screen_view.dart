@@ -15,10 +15,11 @@ class LoginScreenView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              "Login",
+              "Welcome Back!",
               style: TextStyle(fontSize: 36, fontWeight: FontWeight.w300),
             ),
             gap24Y,
+            gap16Y,
             TextField(
               decoration: InputDecoration(
                   labelText: "Username",
@@ -26,7 +27,7 @@ class LoginScreenView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   )),
             ),
-            gap8Y,
+            gap16Y,
             TextField(
               obscureText: true,
               decoration: InputDecoration(
@@ -37,17 +38,32 @@ class LoginScreenView extends StatelessWidget {
             ),
             gap24Y,
             SizedBox(
-              width: 260,
+              width: 290,
               child: ElevatedButton(
                 onPressed: () {},
-                style: ElevatedButton.styleFrom(backgroundColor: orangey,foregroundColor: Colors.white),
-                child: const Text("Login"),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: orangey,
+                    foregroundColor: Colors.white,
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12))),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text("Login",
+                      style: TextStyle(fontSize: 20, letterSpacing: 1)),
+                ),
               ),
             ),
-            gap8Y,
+            gap16Y,
             const Text("Already Have an Account?"),
             gap8Y,
-            TextButton(onPressed: () {}, child: const Text("Register now"))
+            TextButton(
+                onPressed: () {},
+                child: const Text(
+                  "Register now",
+                  style: TextStyle(decoration: TextDecoration.underline),
+                )),
+                // gap24Y,gap24Y,gap24Y,
           ],
         ),
       )),
