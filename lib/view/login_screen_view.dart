@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kitchening/common/gap.dart';
 import 'package:kitchening/common/styles.dart';
+import 'package:kitchening/view/register_screen_view.dart';
 
 class LoginScreenView extends StatelessWidget {
   const LoginScreenView({super.key});
@@ -55,10 +56,10 @@ class LoginScreenView extends StatelessWidget {
               ),
             ),
             gap16Y,
-            const Text("Already Have an Account?"),
+            const Text("Don't Have an Account?"),
             gap8Y,
             TextButton(
-                onPressed: () {},
+                onPressed: ()=>Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>const RegisterScreenView())),
                 child: const Text(
                   "Register now",
                   style: TextStyle(decoration: TextDecoration.underline),
