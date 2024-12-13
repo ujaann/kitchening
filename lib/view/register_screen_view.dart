@@ -92,7 +92,6 @@ class _RegisterScreenViewState extends State<RegisterScreenView> {
               child: ElevatedButton(
                 onPressed: () {
                   final error=validateFields();
-                  print(error);
                   if(error!=null){
                     showErrorSnackBar(context, message: error);
                   }
