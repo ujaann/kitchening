@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kitchening/common/gap.dart';
 import 'package:kitchening/common/my_snackbar.dart';
 import 'package:kitchening/common/styles.dart';
+import 'package:kitchening/view/dashboard_screen_view.dart';
 import 'package:kitchening/view/login_screen_view.dart';
 
 class RegisterScreenView extends StatefulWidget {
@@ -17,7 +18,6 @@ class _RegisterScreenViewState extends State<RegisterScreenView> {
   final TextEditingController password=TextEditingController();
   final TextEditingController confirmPassword=TextEditingController();
 
-
   String? validateFields(){
     final pass=password.text;
     final conPass=confirmPassword.text;
@@ -32,7 +32,14 @@ class _RegisterScreenViewState extends State<RegisterScreenView> {
     return null;
   }
 
-
+  @override
+  void dispose() {
+    username.dispose();
+    password.dispose();
+    email.dispose();
+    confirmPassword.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,8 +101,9 @@ class _RegisterScreenViewState extends State<RegisterScreenView> {
                   final error=validateFields();
                   if(error!=null){
                     showErrorSnackBar(context, message: error);
+                  }else{
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const DashboardScreenView(),), (route) => false,);
                   }
-                  //Navigate to Dashboard
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: orangey,

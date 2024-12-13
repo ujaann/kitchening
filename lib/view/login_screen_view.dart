@@ -1,10 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:kitchening/common/gap.dart';
+import 'package:kitchening/common/my_snackbar.dart';
 import 'package:kitchening/common/styles.dart';
+import 'package:kitchening/view/dashboard_screen_view.dart';
 import 'package:kitchening/view/register_screen_view.dart';
 
-class LoginScreenView extends StatelessWidget {
+class LoginScreenView extends StatefulWidget {
   const LoginScreenView({super.key});
+
+  @override
+  State<LoginScreenView> createState() => _LoginScreenViewState();
+}
+
+class _LoginScreenViewState extends State<LoginScreenView> {
+  final TextEditingController username=TextEditingController();
+  final TextEditingController password=TextEditingController();
+
+  String? validateFields(){
+    final pass=password.text;
+    final user=username.text;
+
+    if( user!="ujan" && pass!="ujan"){
+      return "Invalid Credentials";
+    }
+    return null;
+  }
+
+  @override
+  void dispose() {
+    username.dispose();
+    password.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +49,7 @@ class LoginScreenView extends StatelessWidget {
             gap24Y,
             gap16Y,
             TextField(
+              controller: username,
               decoration: InputDecoration(
                   labelText: "Username",
                   border: OutlineInputBorder(
@@ -30,6 +58,7 @@ class LoginScreenView extends StatelessWidget {
             ),
             gap16Y,
             TextField(
+              controller: password,
               obscureText: true,
               decoration: InputDecoration(
                   labelText: "Password",
@@ -41,7 +70,15 @@ class LoginScreenView extends StatelessWidget {
             SizedBox(
               width: 290,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  final error=validateFields();
+                  if (error!=null) {
+                    showErrorSnackBar(context, message: error);
+                  }
+                  else{
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const DashboardScreenView(),), (route) => false,);
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: orangey,
                     foregroundColor: Colors.white,
