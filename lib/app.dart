@@ -11,6 +11,7 @@ class App extends StatelessWidget {
       title: "Kitchening",
       color: const Color(0xffF1E0C5),
       theme: getApplicationTheme(),
+      debugShowCheckedModeBanner: false,
       home: const SplashScreenView(),
     );
   }
