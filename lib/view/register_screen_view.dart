@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kitchening/common/gap.dart';
 import 'package:kitchening/common/my_snackbar.dart';
-import 'package:kitchening/common/styles.dart';
 import 'package:kitchening/view/dashboard_screen_view.dart';
 import 'package:kitchening/view/login_screen_view.dart';
 
@@ -13,20 +12,20 @@ class RegisterScreenView extends StatefulWidget {
 }
 
 class _RegisterScreenViewState extends State<RegisterScreenView> {
-  final TextEditingController username=TextEditingController();
-  final TextEditingController email=TextEditingController();
-  final TextEditingController password=TextEditingController();
-  final TextEditingController confirmPassword=TextEditingController();
+  final TextEditingController username = TextEditingController();
+  final TextEditingController email = TextEditingController();
+  final TextEditingController password = TextEditingController();
+  final TextEditingController confirmPassword = TextEditingController();
 
-  String? validateFields(){
-    final pass=password.text;
-    final conPass=confirmPassword.text;
-    
-    if(username.text.length<4 || pass.length<4 || conPass.length<4){
+  String? validateFields() {
+    final pass = password.text;
+    final conPass = confirmPassword.text;
+
+    if (username.text.length < 4 || pass.length < 4 || conPass.length < 4) {
       return "Username and password must be longer than 4 characters";
     }
 
-    if(pass!=conPass){
+    if (pass != conPass) {
       return "Error... Password does not match";
     }
     return null;
@@ -40,6 +39,7 @@ class _RegisterScreenViewState extends State<RegisterScreenView> {
     confirmPassword.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,9 +50,7 @@ class _RegisterScreenViewState extends State<RegisterScreenView> {
           children: [
             const Text(
               "Let's Get Started",
-              style: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.w300),
+              style: TextStyle(fontSize: 36, fontWeight: FontWeight.w300),
             ),
             gap24Y,
             TextField(
@@ -71,7 +69,7 @@ class _RegisterScreenViewState extends State<RegisterScreenView> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   )),
-                  keyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.emailAddress,
             ),
             gap16Y,
             TextField(
@@ -98,19 +96,19 @@ class _RegisterScreenViewState extends State<RegisterScreenView> {
               width: 290,
               child: ElevatedButton(
                 onPressed: () {
-                  final error=validateFields();
-                  if(error!=null){
+                  final error = validateFields();
+                  if (error != null) {
                     showErrorSnackBar(context, message: error);
-                  }else{
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const DashboardScreenView(),), (route) => false,);
+                  } else {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DashboardScreenView(),
+                      ),
+                      (route) => false,
+                    );
                   }
                 },
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: orangey,
-                    foregroundColor: Colors.white,
-                    elevation: 10,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12))),
                 child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.0),
                   child: Text("Register",

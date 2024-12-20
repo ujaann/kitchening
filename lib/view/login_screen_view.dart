@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kitchening/common/gap.dart';
 import 'package:kitchening/common/my_snackbar.dart';
-import 'package:kitchening/common/styles.dart';
 import 'package:kitchening/view/dashboard_screen_view.dart';
 import 'package:kitchening/view/register_screen_view.dart';
 
@@ -13,14 +12,14 @@ class LoginScreenView extends StatefulWidget {
 }
 
 class _LoginScreenViewState extends State<LoginScreenView> {
-  final TextEditingController username=TextEditingController();
-  final TextEditingController password=TextEditingController();
+  final TextEditingController username = TextEditingController();
+  final TextEditingController password = TextEditingController();
 
-  String? validateFields(){
-    final pass=password.text;
-    final user=username.text;
+  String? validateFields() {
+    final pass = password.text;
+    final user = username.text;
 
-    if(user!="ujan" || pass!="ujan"){
+    if (user != "ujan" || pass != "ujan") {
       return "Invalid Credentials";
     }
     return null;
@@ -71,20 +70,19 @@ class _LoginScreenViewState extends State<LoginScreenView> {
               width: 290,
               child: ElevatedButton(
                 onPressed: () {
-                  final error=validateFields();
-                  if (error!=null) {
+                  final error = validateFields();
+                  if (error != null) {
                     showErrorSnackBar(context, message: error);
-                  }
-                  else{
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const DashboardScreenView(),), (route) => false,);
+                  } else {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DashboardScreenView(),
+                      ),
+                      (route) => false,
+                    );
                   }
                 },
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: orangey,
-                    foregroundColor: Colors.white,
-                    elevation: 10,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12))),
                 child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.0),
                   child: Text("Login",
@@ -96,12 +94,15 @@ class _LoginScreenViewState extends State<LoginScreenView> {
             const Text("Don't Have an Account?"),
             gap8Y,
             TextButton(
-                onPressed: ()=>Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>const RegisterScreenView())),
+                onPressed: () => Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const RegisterScreenView())),
                 child: const Text(
                   "Register now",
                   style: TextStyle(decoration: TextDecoration.underline),
                 )),
-                // gap24Y,gap24Y,gap24Y,
+            // gap24Y,gap24Y,gap24Y,
           ],
         ),
       )),
