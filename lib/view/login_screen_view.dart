@@ -20,7 +20,7 @@ class _LoginScreenViewState extends State<LoginScreenView> {
     final pass=password.text;
     final user=username.text;
 
-    if( user!="ujan" && pass!="ujan"){
+    if(user!="ujan" || pass!="ujan"){
       return "Invalid Credentials";
     }
     return null;
