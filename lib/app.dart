@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kitchening/common/styles.dart';
+import 'package:kitchening/common/app_theme.dart';
 import 'package:kitchening/view/splash_screen_view.dart';
 
 class App extends StatelessWidget {
@@ -10,10 +10,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: "Kitchening",
       color: const Color(0xffF1E0C5),
-      theme: ThemeData(
-        scaffoldBackgroundColor: lightBrown,
-        inputDecorationTheme: const InputDecorationTheme(filled: true,fillColor: Color(0x99fefefe))
-      ),
+      theme: getApplicationTheme(),
       home: const SplashScreenView(),
     );
   }
