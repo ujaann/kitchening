@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kitchening/common/gap.dart';
+import 'package:kitchening/app/common/gap.dart';
 
 class RecipeCard extends StatelessWidget {
   const RecipeCard({super.key});

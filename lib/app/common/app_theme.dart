@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kitchening/common/styles.dart';
+import 'package:kitchening/app/common/styles.dart';
 
 ThemeData getApplicationTheme() {
   return ThemeData(
