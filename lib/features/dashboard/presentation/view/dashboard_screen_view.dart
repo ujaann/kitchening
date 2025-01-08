@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kitchening/view/bottom_navigation_view/cart_view.dart';
-import 'package:kitchening/view/bottom_navigation_view/home_view.dart';
-import 'package:kitchening/view/bottom_navigation_view/profile_view.dart';
-import 'package:kitchening/view/bottom_navigation_view/settings_view.dart';
+import 'package:kitchening/features/dashboard/presentation/view/bottom_navigation_view/home_view.dart';
+import 'package:kitchening/features/dashboard/presentation/view/bottom_navigation_view/library_view.dart';
+import 'package:kitchening/features/dashboard/presentation/view/bottom_navigation_view/profile_view.dart';
+import 'package:kitchening/features/dashboard/presentation/view/bottom_navigation_view/settings_view.dart';
 
 class DashboardScreenView extends StatefulWidget {
   const DashboardScreenView({super.key});
@@ -14,7 +14,7 @@ class DashboardScreenView extends StatefulWidget {
 class _DashboardScreenViewState extends State<DashboardScreenView> {
   final List<Widget> listOfViews = [
     const HomeView(),
-    const CartView(),
+    const LibraryView(),
     const ProfileView(),
     const SettingsView(),
   ];

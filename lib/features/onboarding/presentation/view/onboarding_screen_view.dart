@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kitchening/common/onboarding_element.dart';
-import 'package:kitchening/view/login_screen_view.dart';
+import 'package:kitchening/features/auth/presentation/view/login_screen_view.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreenView extends StatefulWidget {

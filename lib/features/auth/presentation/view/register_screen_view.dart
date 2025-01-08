@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kitchening/common/gap.dart';
 import 'package:kitchening/common/my_snackbar.dart';
-import 'package:kitchening/view/dashboard_screen_view.dart';
-import 'package:kitchening/view/login_screen_view.dart';
+import 'package:kitchening/features/auth/presentation/view/login_screen_view.dart';
+import 'package:kitchening/features/dashboard/presentation/view/dashboard_screen_view.dart';
 
 class RegisterScreenView extends StatefulWidget {
   const RegisterScreenView({super.key});
