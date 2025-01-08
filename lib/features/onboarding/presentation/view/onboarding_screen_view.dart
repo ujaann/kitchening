@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kitchening/common/onboarding_element.dart';
-import 'package:kitchening/features/auth/presentation/view/login_screen_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kitchening/app/common/onboarding_element.dart';
+import 'package:kitchening/features/onboarding/presentation/view_model/onboarding_cubit.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreenView extends StatefulWidget {
@@ -63,12 +64,8 @@ class _OnboardingScreenViewState extends State<OnboardingScreenView> {
             SizedBox(
               width: 290,
               child: OutlinedButton(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LoginScreenView()));
-                },
+                onPressed: () =>
+                    context.read<OnboardingCubit>().navigateToLogin(context),
                 style: OutlinedButton.styleFrom(
                     foregroundColor: Colors.black45,
                     shape: RoundedRectangleBorder(
