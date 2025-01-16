@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kitchening/common/my_card.dart';
+import 'package:kitchening/app/common/my_card.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
