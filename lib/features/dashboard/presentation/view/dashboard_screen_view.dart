@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kitchening/features/dashboard/presentation/view/bottom_navigation_view/home_view.dart';
 import 'package:kitchening/features/dashboard/presentation/view/bottom_navigation_view/library_view.dart';
 import 'package:kitchening/features/dashboard/presentation/view/bottom_navigation_view/profile_view.dart';
 import 'package:kitchening/features/dashboard/presentation/view/bottom_navigation_view/settings_view.dart';
+import 'package:kitchening/features/dashboard/presentation/view_model/dashboard_cubit.dart';
 
 class DashboardScreenView extends StatefulWidget {
   const DashboardScreenView({super.key});
@@ -29,12 +31,10 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
         child: const Icon(Icons.add_circle_outline),
       ),
       bottomNavigationBar: NavigationBar(
-        selectedIndex: selectedIndex,
+        selectedIndex: context.watch<DashboardCubit>().state.selectedIndex,
         animationDuration: const Duration(milliseconds: 600),
         onDestinationSelected: (value) {
-          setState(() {
-            selectedIndex = value;
-          });
+          context.read<DashboardCubit>().onTabTapped(value);
         },
         destinations: const [
           NavigationDestination(
@@ -65,7 +65,9 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
           ),
         ],
       ),
-      body: listOfViews[selectedIndex],
+      body: BlocBuilder<DashboardCubit, DashboardState>(
+        builder: (context, state) => state.views.elementAt(state.selectedIndex),
+      ),
     );
   }
 }
