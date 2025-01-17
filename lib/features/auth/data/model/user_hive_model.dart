@@ -24,6 +24,12 @@ class UserHiveModel extends Equatable {
     required this.email,
   }) : userId = userId ?? const Uuid().v4();
 
+  const UserHiveModel.initial()
+      : userId = null,
+        username = "",
+        password = "",
+        email = "";
+
   UserEntity toEntity() {
     return UserEntity(
       username: username,
