@@ -22,7 +22,8 @@ class UserLocalDatasource implements IUserDataSource {
   Future<UserEntity?> login(String username, String password) async {
     try {
       final userHiveModel = await _hiveService.login(username, password);
-      if (userHiveModel == null) {
+      if (userHiveModel == null ||
+          userHiveModel == const UserHiveModel.initial()) {
         return null;
       } else {
         return userHiveModel.toEntity();

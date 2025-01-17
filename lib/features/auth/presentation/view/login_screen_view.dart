@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kitchening/app/common/gap.dart';
 import 'package:kitchening/app/common/my_snackbar.dart';
 import 'package:kitchening/features/auth/presentation/view/register_screen_view.dart';
+import 'package:kitchening/features/auth/presentation/view_model/login/login_bloc.dart';
 import 'package:kitchening/features/dashboard/presentation/view/dashboard_screen_view.dart';
 
 class LoginScreenView extends StatefulWidget {
@@ -17,10 +19,11 @@ class _LoginScreenViewState extends State<LoginScreenView> {
 
   String? validateFields() {
     final pass = password.text;
+
     final user = username.text;
 
-    if (user != "ujan" || pass != "ujan") {
-      return "Invalid Credentials";
+    if (user.isEmpty || pass.isEmpty) {
+      return "Please fill all the fields";
     }
     return null;
   }
@@ -69,19 +72,20 @@ class _LoginScreenViewState extends State<LoginScreenView> {
             SizedBox(
               width: 290,
               child: ElevatedButton(
+                //added code for validation here
                 onPressed: () {
                   final error = validateFields();
                   if (error != null) {
                     showErrorSnackBar(context, message: error);
-                  } else {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const DashboardScreenView(),
-                      ),
-                      (route) => false,
-                    );
+                    return;
                   }
+
+                  context.read<LoginBloc>().add(LoginUserEvent(
+                        username: username.text,
+                        password: password.text,
+                        context: context,
+                        destination: const DashboardScreenView(),
+                      ));
                 },
                 child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -94,10 +98,10 @@ class _LoginScreenViewState extends State<LoginScreenView> {
             const Text("Don't Have an Account?"),
             gap8Y,
             TextButton(
-                onPressed: () => Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const RegisterScreenView())),
+                onPressed: () => context.read<LoginBloc>().add(
+                    NavigateRegisterScreenEvent(
+                        context: context,
+                        destination: const RegisterScreenView())),
                 child: const Text(
                   "Register now",
                   style: TextStyle(decoration: TextDecoration.underline),

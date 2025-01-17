@@ -12,3 +12,17 @@ class NavigateLoginScreenEvent extends RegisterEvent {
 
   const NavigateLoginScreenEvent({required this.context});
 }
+
+class RegisterUserEvent extends RegisterEvent {
+  final BuildContext context;
+  final String username;
+  final String password;
+  final String email;
+
+  const RegisterUserEvent({
+    required this.username,
+    required this.password,
+    required this.email,
+    required this.context,
+  });
+}

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kitchening/app/common/gap.dart';
 import 'package:kitchening/app/common/my_snackbar.dart';
-import 'package:kitchening/features/auth/presentation/view/login_screen_view.dart';
-import 'package:kitchening/features/dashboard/presentation/view/dashboard_screen_view.dart';
+import 'package:kitchening/features/auth/presentation/view_model/register/register_bloc.dart';
 
 class RegisterScreenView extends StatefulWidget {
   const RegisterScreenView({super.key});
@@ -95,19 +95,19 @@ class _RegisterScreenViewState extends State<RegisterScreenView> {
             SizedBox(
               width: 290,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   final error = validateFields();
                   if (error != null) {
                     showErrorSnackBar(context, message: error);
-                  } else {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const DashboardScreenView(),
-                      ),
-                      (route) => false,
-                    );
+                    return;
                   }
+
+                  context.read<RegisterBloc>().add(RegisterUserEvent(
+                        username: username.text,
+                        password: password.text,
+                        email: email.text,
+                        context: context,
+                      ));
                 },
                 child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -120,10 +120,9 @@ class _RegisterScreenViewState extends State<RegisterScreenView> {
             const Text("Already Have an Account?"),
             gap8Y,
             TextButton(
-                onPressed: () => Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const LoginScreenView())),
+                onPressed: () => context
+                    .read<RegisterBloc>()
+                    .add(NavigateLoginScreenEvent(context: context)),
                 child: const Text(
                   "Login now",
                   style: TextStyle(decoration: TextDecoration.underline),
