@@ -30,9 +30,22 @@ class UserRemoteDatasource implements IUserDataSource {
   }
 
   @override
-  Future<String?> login(String username, String password) {
-    // TODO: implement login
-    throw UnimplementedError();
+  Future<String?> login(String username, String password) async {
+    try {
+      final response = await _dio.post(ApiEndpoints.login, data: {
+        "username": username,
+        "password": password,
+      });
+
+      if (response.statusCode == 200) {
+        final str = response.data['token'];
+        return str;
+      } else {
+        throw Exception(response.statusMessage);
+      }
+    } on DioException catch (e) {
+      throw Exception(e);
+    }
   }
 
   @override

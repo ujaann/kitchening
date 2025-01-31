@@ -36,6 +36,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       username: event.username,
       email: event.email,
       password: event.password,
+      image: state.imageName,
     ));
 
     result.fold(
@@ -46,6 +47,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       },
       (success) {
         emit(const RegisterSuccess());
+        showSuccessSnackBar(event.context, message: "Registered User");
         add(NavigateLoginScreenEvent(context: event.context));
       },
     );

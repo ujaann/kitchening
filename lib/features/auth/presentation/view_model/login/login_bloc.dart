@@ -71,8 +71,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(LoginError(errorMessage: failure.message));
         showErrorSnackBar(event.context, message: failure.message);
       },
-      (success) {
+      (token) {
         emit(const LoginSuccess());
+        //TODO: store this token somewhere
+        print(token);
         add(NavigateDashboardScreenEvent(
           context: event.context,
           destination: event.destination,
