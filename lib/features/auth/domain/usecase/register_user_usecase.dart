@@ -9,9 +9,13 @@ class RegisterUserParams extends Equatable {
   final String username;
   final String email;
   final String password;
+  final String? image;
 
   const RegisterUserParams(
-      {required this.username, required this.email, required this.password});
+      {required this.username,
+      required this.email,
+      required this.password,
+      this.image});
 
   @override
   List<Object?> get props => [username, email];
@@ -28,6 +32,7 @@ class RegisterUserUsecase
     return await _userRepository.addUser(UserEntity(
         username: params.username,
         password: params.password,
-        email: params.email));
+        email: params.email,
+        imageName: params.image));
   }
 }

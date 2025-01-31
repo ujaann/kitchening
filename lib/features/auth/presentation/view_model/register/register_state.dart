@@ -1,20 +1,27 @@
 part of 'register_bloc.dart';
 
 sealed class RegisterState extends Equatable {
-  const RegisterState();
+  final String? imageName;
+  const RegisterState({this.imageName});
 
   @override
   List<Object> get props => [];
 }
 
-final class RegisterInitial extends RegisterState {}
+final class RegisterInitial extends RegisterState {
+  const RegisterInitial({super.imageName});
+}
 
-final class RegisterLoading extends RegisterState {}
+final class RegisterLoading extends RegisterState {
+  const RegisterLoading({super.imageName});
+}
 
-final class RegisterSuccess extends RegisterState {}
+final class RegisterSuccess extends RegisterState {
+  const RegisterSuccess({super.imageName});
+}
 
 final class RegisterError extends RegisterState {
   final String errorMessage;
 
-  const RegisterError({required this.errorMessage});
+  const RegisterError({super.imageName, required this.errorMessage});
 }

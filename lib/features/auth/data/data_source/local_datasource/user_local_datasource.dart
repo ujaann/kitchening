@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:kitchening/core/network/hive_service.dart';
 import 'package:kitchening/features/auth/data/data_source/user_data_source.dart';
 import 'package:kitchening/features/auth/data/model/user_hive_model.dart';
@@ -31,5 +33,11 @@ class UserLocalDatasource implements IUserDataSource {
     } catch (e) {
       throw Exception(e);
     }
+  }
+
+  @override
+  Future<String> uploadProfilePicture(File file) {
+    // TODO: implement uploadProfilePicture
+    throw UnimplementedError();
   }
 }

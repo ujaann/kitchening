@@ -1,13 +1,15 @@
+import 'dart:io';
+
 import 'package:fpdart/fpdart.dart';
 import 'package:kitchening/core/error/failure.dart';
-import 'package:kitchening/features/auth/data/data_source/user_data_source.dart';
+import 'package:kitchening/features/auth/data/data_source/local_datasource/user_local_datasource.dart';
 import 'package:kitchening/features/auth/domain/entity/user_entity.dart';
 import 'package:kitchening/features/auth/domain/repository/user_repository.dart';
 
 class UserLocalRepository implements IUserRepository {
-  final IUserDataSource _userDataSource;
+  final UserLocalDatasource _userDataSource;
 
-  UserLocalRepository({required IUserDataSource userDataSource})
+  UserLocalRepository({required UserLocalDatasource userDataSource})
       : _userDataSource = userDataSource;
 
   @override
@@ -29,5 +31,11 @@ class UserLocalRepository implements IUserRepository {
     } catch (e) {
       return Left(LocalDatabaseFailure(message: e.toString()));
     }
+  }
+
+  @override
+  Future<Either<Failure, String>> uploadProfilePicture(File file) {
+    // TODO: implement uploadProfilePicture
+    throw UnimplementedError();
   }
 }

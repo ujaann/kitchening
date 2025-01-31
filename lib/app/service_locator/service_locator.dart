@@ -1,9 +1,14 @@
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:kitchening/core/network/api_service.dart';
 import 'package:kitchening/core/network/hive_service.dart';
 import 'package:kitchening/features/auth/data/data_source/local_datasource/user_local_datasource.dart';
+import 'package:kitchening/features/auth/data/data_source/remote_datasource/user_remote_datasource.dart';
 import 'package:kitchening/features/auth/data/repository/user_local_repository.dart';
+import 'package:kitchening/features/auth/data/repository/user_remote_repository.dart';
 import 'package:kitchening/features/auth/domain/usecase/login_user_usecase.dart';
 import 'package:kitchening/features/auth/domain/usecase/register_user_usecase.dart';
+import 'package:kitchening/features/auth/domain/usecase/upload_profile_usecase.dart';
 import 'package:kitchening/features/auth/presentation/view_model/login/login_bloc.dart';
 import 'package:kitchening/features/auth/presentation/view_model/register/register_bloc.dart';
 import 'package:kitchening/features/dashboard/presentation/view_model/dashboard_cubit.dart';
@@ -14,9 +19,12 @@ final getIt = GetIt.instance;
 
 Future<void> initDependencies() async {
   await _initHiveService();
+  await _initApiService();
   await _initDashboardScreenDependencies();
   //dependencies like local repository and local datasource
   await _userLocalDependencies();
+  await _userRemoteDependencies();
+
   await _initRegisterScreenDependencies();
   await _initLoginScreenDependencies();
   await _initOnboardingScreenDependencies();
@@ -26,6 +34,12 @@ Future<void> initDependencies() async {
 _initHiveService() async {
   getIt.registerLazySingleton<HiveService>(
     () => HiveService(),
+  );
+}
+
+_initApiService() async {
+  getIt.registerLazySingleton<Dio>(
+    () => ApiService(Dio()).dio,
   );
 }
 
@@ -52,9 +66,20 @@ _userLocalDependencies() async {
   );
 }
 
+_userRemoteDependencies() async {
+  getIt.registerLazySingleton(
+    () => UserRemoteDatasource(
+      dio: getIt<Dio>(),
+    ),
+  );
+  getIt.registerLazySingleton(
+    () => UserRemoteRepository(userDatasource: getIt<UserRemoteDatasource>()),
+  );
+}
+
 _initLoginScreenDependencies() async {
   getIt.registerLazySingleton(
-    () => LoginUserUsecase(userRepository: getIt<UserLocalRepository>()),
+    () => LoginUserUsecase(userRepository: getIt<UserRemoteRepository>()),
   );
   getIt.registerFactory<LoginBloc>(() => LoginBloc(
         dashboardCubit: getIt<DashboardCubit>(),
@@ -65,11 +90,18 @@ _initLoginScreenDependencies() async {
 
 _initRegisterScreenDependencies() async {
   getIt.registerLazySingleton(
-    () => RegisterUserUsecase(userRepository: getIt<UserLocalRepository>()),
+    () => RegisterUserUsecase(userRepository: getIt<UserRemoteRepository>()),
+  );
+
+  getIt.registerLazySingleton(
+    () => UploadProfileUsecase(remoteRepository: getIt<UserRemoteRepository>()),
   );
 
   getIt.registerFactory<RegisterBloc>(
-    () => RegisterBloc(registerUserUsecase: getIt()),
+    () => RegisterBloc(
+      uploadProfileUsecase: getIt(),
+      registerUserUsecase: getIt(),
+    ),
   );
 }
 

@@ -26,3 +26,10 @@ class RegisterUserEvent extends RegisterEvent {
     required this.context,
   });
 }
+
+class UploadImageEvent extends RegisterEvent {
+  final BuildContext context;
+  final File image;
+
+  const UploadImageEvent({required this.context, required this.image});
+}
