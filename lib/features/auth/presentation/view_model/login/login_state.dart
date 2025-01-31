@@ -10,9 +10,7 @@ sealed class LoginState extends Equatable {
 final class LoginInitial extends LoginState {}
 
 final class LoginSuccess extends LoginState {
-  final UserEntity loggedUser;
-
-  const LoginSuccess({required this.loggedUser});
+  const LoginSuccess();
 }
 
 final class LoginError extends LoginState {

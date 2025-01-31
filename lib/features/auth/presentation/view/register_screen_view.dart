@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kitchening/app/common/gap.dart';
 import 'package:kitchening/app/common/my_snackbar.dart';
 import 'package:kitchening/features/auth/presentation/view_model/register/register_bloc.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class RegisterScreenView extends StatefulWidget {
   const RegisterScreenView({super.key});
@@ -16,6 +20,7 @@ class _RegisterScreenViewState extends State<RegisterScreenView> {
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
   final TextEditingController confirmPassword = TextEditingController();
+  File? _img;
 
   String? validateFields() {
     final pass = password.text;
@@ -29,6 +34,29 @@ class _RegisterScreenViewState extends State<RegisterScreenView> {
       return "Error... Password does not match";
     }
     return null;
+  }
+
+  Future _browseImage(ImageSource imageSource) async {
+    try {
+      final image = await ImagePicker().pickImage(source: imageSource);
+      if (image != null) {
+        setState(() {
+          _img = File(image.path);
+          //TODO: SEND image to server
+        });
+      } else {
+        return;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  checkCameraPermission() async {
+    if (await Permission.camera.isRestricted ||
+        await Permission.camera.isDenied) {
+      await Permission.camera.request();
+    }
   }
 
   @override
@@ -53,6 +81,44 @@ class _RegisterScreenViewState extends State<RegisterScreenView> {
               style: TextStyle(fontSize: 36, fontWeight: FontWeight.w300),
             ),
             gap24Y,
+            InkWell(
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            checkCameraPermission();
+                            _browseImage(ImageSource.camera);
+                            Navigator.pop(context);
+                            // Upload image it is not null
+                          },
+                          icon: const Icon(Icons.camera),
+                          label: const Text('Camera'),
+                        ),
+                        ElevatedButton.icon(
+                          onPressed: () {},
+                          icon: const Icon(Icons.image),
+                          label: const Text('Gallery'),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+              child: CircleAvatar(
+                radius: 80,
+                backgroundImage: _img != null
+                    ? FileImage(_img!)
+                    : const AssetImage('assets/images/profile.png')
+                        as ImageProvider,
+              ),
+            ),
+            gap16Y,
             TextField(
               controller: username,
               decoration: InputDecoration(

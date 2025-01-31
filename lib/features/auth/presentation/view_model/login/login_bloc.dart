@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kitchening/app/common/my_snackbar.dart';
-import 'package:kitchening/features/auth/domain/entity/user_entity.dart';
 import 'package:kitchening/features/auth/domain/usecase/login_user_usecase.dart';
 import 'package:kitchening/features/auth/presentation/view_model/register/register_bloc.dart';
 import 'package:kitchening/features/dashboard/presentation/view_model/dashboard_cubit.dart';
@@ -73,16 +72,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         showErrorSnackBar(event.context, message: failure.message);
       },
       (success) {
-        if (success == null) {
-          emit(const LoginError(errorMessage: "Invalid Credentials"));
-          showErrorSnackBar(event.context, message: "Invalid Credentials");
-        } else {
-          emit(LoginSuccess(loggedUser: success));
-          add(NavigateDashboardScreenEvent(
-            context: event.context,
-            destination: event.destination,
-          ));
-        }
+        emit(const LoginSuccess());
+        add(NavigateDashboardScreenEvent(
+          context: event.context,
+          destination: event.destination,
+        ));
       },
     );
   }

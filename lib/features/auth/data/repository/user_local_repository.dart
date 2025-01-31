@@ -21,11 +21,11 @@ class UserLocalRepository implements IUserRepository {
   }
 
   @override
-  Future<Either<Failure, UserEntity?>> login(
+  Future<Either<Failure, String?>> login(
       String username, String password) async {
     try {
-      final userEntity = await _userDataSource.login(username, password);
-      return Right(userEntity);
+      final userToken = await _userDataSource.login(username, password);
+      return Right(userToken);
     } catch (e) {
       return Left(LocalDatabaseFailure(message: e.toString()));
     }
