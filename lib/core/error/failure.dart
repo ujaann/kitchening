@@ -21,3 +21,10 @@ abstract class Failure extends Equatable {
 class LocalDatabaseFailure extends Failure {
   const LocalDatabaseFailure({required super.message});
 }
+
+class ApiFailure extends Failure {
+  @override
+  final int statusCode;
+
+  const ApiFailure({required super.message, required this.statusCode});
+}

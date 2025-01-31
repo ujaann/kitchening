@@ -61,6 +61,7 @@ dependencies:
 
   # For camera and gallery use
   image_picker: ^1.1.2
+  pretty_dio_logger: ^1.4.0
 
 dev_dependencies:
   flutter_test:
