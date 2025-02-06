@@ -40,7 +40,7 @@ dependencies:
   get_it: ^8.0.3
 
   # State Management
-  flutter_bloc: ^8.1.6
+  flutter_bloc: ^9.0.0
   
   # For Either functional programming
   fpdart: ^1.1.1
@@ -63,6 +63,8 @@ dependencies:
   image_picker: ^1.1.2
   pretty_dio_logger: ^1.4.0
 
+  shared_preferences: ^2.5.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -74,8 +76,13 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
   build_runner: ^2.4.14
-  hive_ce_generator: ^1.8.2
+  # Uncomment hive generator when bloc test and mocktail are commented
+  # hive_ce_generator: ^1.8.2
   json_serializable: ^6.9.3
+  bloc_test: ^10.0.0
+  mocktail: ^1.0.4
+  
+  
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
