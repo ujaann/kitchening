@@ -23,7 +23,7 @@ class UserLocalRepository implements IUserRepository {
   }
 
   @override
-  Future<Either<Failure, String?>> login(
+  Future<Either<Failure, String>> login(
       String username, String password) async {
     try {
       final userToken = await _userDataSource.login(username, password);

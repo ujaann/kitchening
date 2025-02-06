@@ -23,7 +23,7 @@ class UserRemoteRepository implements IUserRepository {
   }
 
   @override
-  Future<Either<Failure, String?>> login(
+  Future<Either<Failure, String>> login(
       String username, String password) async {
     try {
       final token = await _userDatasource.login(username, password);

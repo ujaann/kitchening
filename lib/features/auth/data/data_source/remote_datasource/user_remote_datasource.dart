@@ -30,7 +30,7 @@ class UserRemoteDatasource implements IUserDataSource {
   }
 
   @override
-  Future<String?> login(String username, String password) async {
+  Future<String> login(String username, String password) async {
     try {
       final response = await _dio.post(ApiEndpoints.login, data: {
         "username": username,

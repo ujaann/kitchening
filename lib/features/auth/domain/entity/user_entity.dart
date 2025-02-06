@@ -15,6 +15,13 @@ class UserEntity extends Equatable {
     this.imageName,
   });
 
+  const UserEntity.empty()
+      : email = "_empty.email",
+        username = "_empty.username",
+        password = "_empty.password",
+        userId = "_empty.userId",
+        imageName = "_empty.imageName";
+
   @override
   List<Object?> get props => [userId, email];
 }
