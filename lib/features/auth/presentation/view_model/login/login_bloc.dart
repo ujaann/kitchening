@@ -73,7 +73,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       },
       (token) {
         emit(const LoginSuccess());
-        //TODO: store this token somewhere
         print(token);
         add(NavigateDashboardScreenEvent(
           context: event.context,

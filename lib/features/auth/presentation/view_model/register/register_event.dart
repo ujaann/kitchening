@@ -14,7 +14,8 @@ class NavigateLoginScreenEvent extends RegisterEvent {
 }
 
 class RegisterUserEvent extends RegisterEvent {
-  final BuildContext context;
+  // Context commented for register event
+  // final BuildContext context;
   final String username;
   final String password;
   final String email;
@@ -24,7 +25,7 @@ class RegisterUserEvent extends RegisterEvent {
     required this.username,
     required this.password,
     required this.email,
-    required this.context,
+    // required this.context,
     this.imageName,
   });
 }

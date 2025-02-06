@@ -1,21 +1,22 @@
 import 'dart:io';
 
-import 'package:fpdart/src/either.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:kitchening/app/usecase/usecase.dart';
 import 'package:kitchening/core/error/failure.dart';
-import 'package:kitchening/features/auth/data/repository/user_remote_repository.dart';
+import 'package:kitchening/features/auth/domain/repository/user_repository.dart';
 
 class UploadProfileParams {
   final File file;
 
   UploadProfileParams({required this.file});
+  UploadProfileParams.empty() : file = File('_empty.path');
 }
 
 class UploadProfileUsecase
     implements UsecaseWithParams<String, UploadProfileParams> {
-  final UserRemoteRepository _remoteRepository;
+  final IUserRepository _remoteRepository;
 
-  UploadProfileUsecase({required UserRemoteRepository remoteRepository})
+  UploadProfileUsecase({required IUserRepository remoteRepository})
       : _remoteRepository = remoteRepository;
 
   @override
