@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kitchening/core/network/api_service.dart';
 import 'package:kitchening/core/network/hive_service.dart';
+import 'package:kitchening/core/shared_prefs/token_shared_prefs.dart';
 import 'package:kitchening/features/auth/data/data_source/local_datasource/user_local_datasource.dart';
 import 'package:kitchening/features/auth/data/data_source/remote_datasource/user_remote_datasource.dart';
 import 'package:kitchening/features/auth/data/repository/user_local_repository.dart';
@@ -14,12 +15,15 @@ import 'package:kitchening/features/auth/presentation/view_model/register/regist
 import 'package:kitchening/features/dashboard/presentation/view_model/dashboard_cubit.dart';
 import 'package:kitchening/features/onboarding/presentation/view_model/onboarding_cubit.dart';
 import 'package:kitchening/features/splash/presentation/view_model/splash_cubit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final getIt = GetIt.instance;
 
 Future<void> initDependencies() async {
   await _initHiveService();
   await _initApiService();
+  await _initSharedPreferences();
+
   await _initDashboardScreenDependencies();
   //dependencies like local repository and local datasource
   await _userLocalDependencies();
@@ -41,6 +45,11 @@ _initApiService() async {
   getIt.registerLazySingleton<Dio>(
     () => ApiService(Dio()).dio,
   );
+}
+
+Future<void> _initSharedPreferences() async {
+  final sharedPreferences = await SharedPreferences.getInstance();
+  getIt.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
 }
 
 _initSplashScreenDependencies() async {
@@ -78,8 +87,16 @@ _userRemoteDependencies() async {
 }
 
 _initLoginScreenDependencies() async {
+  // ================================ TOKEN SHARED PREFERENCES ================================ //
+  getIt.registerLazySingleton<TokenSharedPrefs>(
+    () => TokenSharedPrefs(sharedPreferences: getIt()),
+  );
+
   getIt.registerLazySingleton(
-    () => LoginUserUsecase(userRepository: getIt<UserRemoteRepository>()),
+    () => LoginUserUsecase(
+      userRepository: getIt<UserRemoteRepository>(),
+      tokenSharedPrefs: getIt<TokenSharedPrefs>(),
+    ),
   );
   getIt.registerFactory<LoginBloc>(() => LoginBloc(
         dashboardCubit: getIt<DashboardCubit>(),
