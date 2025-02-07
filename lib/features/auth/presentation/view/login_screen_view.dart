@@ -4,7 +4,6 @@ import 'package:kitchening/app/common/gap.dart';
 import 'package:kitchening/app/common/my_snackbar.dart';
 import 'package:kitchening/features/auth/presentation/view/register_screen_view.dart';
 import 'package:kitchening/features/auth/presentation/view_model/login/login_bloc.dart';
-import 'package:kitchening/features/dashboard/presentation/view/dashboard_screen_view.dart';
 
 class LoginScreenView extends StatefulWidget {
   const LoginScreenView({super.key});
@@ -84,8 +83,8 @@ class _LoginScreenViewState extends State<LoginScreenView> {
                       context.read<LoginBloc>().add(LoginUserEvent(
                             username: username.text,
                             password: password.text,
-                            context: context,
-                            destination: const DashboardScreenView(),
+                            // context: context,
+                            // destination: const DashboardScreenView(),
                           ));
                     },
                     child: const Padding(

@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kitchening/app/common/my_snackbar.dart';
 import 'package:kitchening/features/auth/domain/usecase/login_user_usecase.dart';
 import 'package:kitchening/features/auth/presentation/view_model/register/register_bloc.dart';
 import 'package:kitchening/features/dashboard/presentation/view_model/dashboard_cubit.dart';
@@ -69,15 +68,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     result.fold(
       (failure) {
         emit(LoginError(errorMessage: failure.message));
-        showErrorSnackBar(event.context, message: failure.message);
+        // showErrorSnackBar(event.context, message: failure.message);
       },
       (token) {
         emit(const LoginSuccess());
         print(token);
-        add(NavigateDashboardScreenEvent(
-          context: event.context,
-          destination: event.destination,
-        ));
+        // add(NavigateDashboardScreenEvent(
+        //   context: event.context,
+        //   destination: event.destination,
+        // ));
       },
     );
   }

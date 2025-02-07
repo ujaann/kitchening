@@ -26,15 +26,15 @@ class NavigateDashboardScreenEvent extends LoginEvent {
 }
 
 class LoginUserEvent extends LoginEvent {
-  final BuildContext context;
-  final Widget destination;
+  // final BuildContext context;
+  // final Widget destination;
   final String username;
   final String password;
 
   const LoginUserEvent({
     required this.username,
     required this.password,
-    required this.context,
-    required this.destination,
+    // required this.context,
+    // required this.destination,
   });
 }

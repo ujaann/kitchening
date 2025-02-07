@@ -11,11 +11,15 @@ class LoginUserParams extends Equatable {
 
   const LoginUserParams({required this.username, required this.password});
 
+  const LoginUserParams.empty()
+      : username = "_empty.username",
+        password = "_empty.password";
+
   @override
   List<Object?> get props => [username];
 }
 
-class LoginUserUsecase implements UsecaseWithParams<String?, LoginUserParams> {
+class LoginUserUsecase implements UsecaseWithParams<String, LoginUserParams> {
   final IUserRepository _userRepository;
   final TokenSharedPrefs tokenSharedPrefs;
 
@@ -24,7 +28,7 @@ class LoginUserUsecase implements UsecaseWithParams<String?, LoginUserParams> {
       : _userRepository = userRepository;
 
   @override
-  Future<Either<Failure, String?>> call(LoginUserParams params) async {
+  Future<Either<Failure, String>> call(LoginUserParams params) async {
     final result =
         await _userRepository.login(params.username, params.password);
     return result.fold(
