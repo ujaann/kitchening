@@ -14,9 +14,9 @@ void main() {
     build: () {
       return dashboardCubit;
     },
-    act: (cubit) => cubit.onTabTapped(1),
+    act: (cubit) => cubit.onTabTapped(3),
     expect: () => <DashboardState>[
-      const DashboardState.initial().copyWith(selectedIndex: 1),
+      const DashboardState.initial().copyWith(selectedIndex: 3),
     ],
     //verify caused bad state so it is commented for now
     // verify: (cubit) {

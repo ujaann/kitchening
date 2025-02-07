@@ -32,7 +32,8 @@ class UserApiModel {
         username: userEntity.username,
         password: userEntity.password,
         email: userEntity.email,
-        id: userEntity.userId);
+        id: userEntity.userId,
+        image: userEntity.imageName);
   }
 
   factory UserApiModel.fromJson(Map<String, dynamic> json) => UserApiModel(
