@@ -81,6 +81,7 @@ dev_dependencies:
   json_serializable: ^6.9.3
   bloc_test: ^10.0.0
   mocktail: ^1.0.4
+  test_cov_console: ^0.2.2
   
   
 
