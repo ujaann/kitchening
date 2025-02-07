@@ -31,8 +31,11 @@ class RegisterUserEvent extends RegisterEvent {
 }
 
 class UploadImageEvent extends RegisterEvent {
-  final BuildContext context;
+  // final BuildContext context;
   final File image;
 
-  const UploadImageEvent({required this.context, required this.image});
+  const UploadImageEvent(
+      {
+      // required this.context,
+      required this.image});
 }

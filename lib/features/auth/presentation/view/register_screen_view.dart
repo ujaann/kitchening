@@ -42,9 +42,9 @@ class _RegisterScreenViewState extends State<RegisterScreenView> {
       if (image != null) {
         setState(() {
           _img = File(image.path);
-          context
-              .read<RegisterBloc>()
-              .add(UploadImageEvent(context: context, image: _img!));
+          context.read<RegisterBloc>().add(UploadImageEvent(
+              // context: context,
+              image: _img!));
         });
       } else {
         return;
@@ -177,7 +177,7 @@ class _RegisterScreenViewState extends State<RegisterScreenView> {
                               username: username.text,
                               password: password.text,
                               email: email.text,
-                              context: context,
+                              // context: context,
                             ));
                       },
                       child: const Padding(

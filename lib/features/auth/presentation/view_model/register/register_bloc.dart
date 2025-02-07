@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:kitchening/app/common/my_snackbar.dart';
 import 'package:kitchening/features/auth/domain/usecase/register_user_usecase.dart';
 import 'package:kitchening/features/auth/domain/usecase/upload_profile_usecase.dart';
 
@@ -43,29 +42,31 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       (failure) {
         emit(RegisterError(
             errorMessage: failure.message, imageName: state.imageName));
-        showErrorSnackBar(event.context, message: failure.message);
+        // showErrorSnackBar(event.context, message: failure.message);
       },
       (success) {
         emit(const RegisterSuccess());
-        showSuccessSnackBar(event.context, message: "Registered User");
-        add(NavigateLoginScreenEvent(context: event.context));
+        // showSuccessSnackBar(event.context, message: "Registered User");
+        // add(NavigateLoginScreenEvent(context: event.context));
       },
     );
   }
 
   _onUploadProfile(UploadImageEvent event, Emitter<RegisterState> emit) async {
     emit(const RegisterLoading());
+    print("Before calling usecase");
     final result = await _uploadProfileUsecase
         .call(UploadProfileParams(file: event.image));
+    print("After calling usecase");
     result.fold(
       (failure) {
         emit(RegisterError(
             errorMessage: failure.message, imageName: state.imageName));
-        showErrorSnackBar(event.context, message: failure.message);
+        // showErrorSnackBar(event.context, message: failure.message);
       },
       (imageName) {
         emit(RegisterInitial(imageName: imageName));
-        showSuccessSnackBar(event.context, message: "Image Added Successfully");
+        // showSuccessSnackBar(event.context, message: "Image Added Successfully");
       },
     );
   }
