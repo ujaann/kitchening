@@ -54,7 +54,7 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
             padding: EdgeInsets.only(left: 24.0),
             child: NavigationDestination(
               icon: Icon(Icons.kitchen),
-              label: 'Your Recipes',
+              label: 'Recipes',
               selectedIcon: Icon(Icons.kitchen_outlined),
             ),
           ),

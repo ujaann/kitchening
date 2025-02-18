@@ -3,31 +3,48 @@ import 'package:kitchening/app/common/styles.dart';
 
 ThemeData getApplicationTheme() {
   return ThemeData(
-      scaffoldBackgroundColor: lightBrown,
+      scaffoldBackgroundColor: peach,
       fontFamily: "Noto Sans",
-      appBarTheme: const AppBarTheme(color: lightBlue),
+      textTheme: const TextTheme(
+        bodyMedium: TextStyle(color: spaceCadet),
+      ),
+      appBarTheme: const AppBarTheme(
+          color: caribeanCurrent, foregroundColor: papayaWhip),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xff9fbfdf),
+        backgroundColor: caribeanCurrent,
         foregroundColor: Colors.white,
         elevation: 10,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       )),
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
-          backgroundColor: lightBlue,
-          splashColor: const Color(0xff9fbfdf),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+        textStyle: const TextStyle(
+          fontSize: 20,
+          letterSpacing: 1,
+          fontWeight: FontWeight.w600,
+        ),
+        foregroundColor: spaceCadet,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        side: const BorderSide(color: caribeanCurrent, width: 2),
+      )),
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: caribeanCurrent,
+          splashColor: caribeanCurrent,
           elevation: 2,
           iconSize: 40,
-          foregroundColor: Colors.blueGrey[700]),
+          foregroundColor: papayaWhip),
       //notworking
       cardColor: lightBlue,
       cardTheme: const CardTheme(shadowColor: ceramicGray, color: ceramicWhite),
-      navigationBarTheme: NavigationBarThemeData(
-          backgroundColor: lightBlue,
-          indicatorColor: const Color(0xff9fbfdf),
+      navigationBarTheme: const NavigationBarThemeData(
+          backgroundColor: caribeanCurrent,
+          indicatorColor: caribeanCurrent,
           labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+          labelTextStyle: WidgetStatePropertyAll(
+              TextStyle(color: papayaWhip, fontWeight: FontWeight.w600)),
           iconTheme: WidgetStatePropertyAll(
-              IconThemeData(size: 36, color: Colors.blueGrey[700]))),
+              IconThemeData(size: 36, color: papayaWhip))),
       inputDecorationTheme: const InputDecorationTheme(
           filled: true, fillColor: Color(0x99fefefe)));
 }

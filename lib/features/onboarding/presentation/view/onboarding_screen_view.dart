@@ -62,22 +62,15 @@ class _OnboardingScreenViewState extends State<OnboardingScreenView> {
               ),
             ),
             SizedBox(
-              width: 290,
+              // width: 290,
               child: OutlinedButton(
                 onPressed: () =>
                     context.read<OnboardingCubit>().navigateToLogin(context),
-                style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.black45,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                    side: const BorderSide(width: 2, color: Colors.black26)),
                 child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.0),
-                  child: Text("Continue",
-                      style: TextStyle(
-                          fontSize: 20,
-                          letterSpacing: 1,
-                          fontWeight: FontWeight.w400)),
+                  child: Text(
+                    "Continue",
+                  ),
                 ),
               ),
             ),

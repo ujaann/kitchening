@@ -116,7 +116,7 @@ class _RegisterScreenViewState extends State<RegisterScreenView> {
                       );
                     },
                     child: CircleAvatar(
-                      radius: 80,
+                      radius: 60,
                       backgroundImage: _img != null
                           ? FileImage(_img!)
                           : const AssetImage('assets/images/profile.png')
