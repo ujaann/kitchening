@@ -9,9 +9,14 @@ import 'package:kitchening/features/dashboard/presentation/view/bottom_navigatio
 part 'dashboard_state.dart';
 
 class DashboardCubit extends Cubit<DashboardState> {
-  DashboardCubit() : super(DashboardState.initial());
+  DashboardCubit() : super(const DashboardState.initial());
 
   void onTabTapped(int index) {
     emit(state.copyWith(selectedIndex: index));
+  }
+
+  void navigateToCreateRecipeView(BuildContext context, Widget destination) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => destination));
   }
 }

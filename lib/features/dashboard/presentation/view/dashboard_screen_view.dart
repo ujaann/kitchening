@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kitchening/features/dashboard/presentation/view/bottom_navigation_view/home_view.dart';
-import 'package:kitchening/features/dashboard/presentation/view/bottom_navigation_view/library_view.dart';
-import 'package:kitchening/features/dashboard/presentation/view/bottom_navigation_view/profile_view.dart';
-import 'package:kitchening/features/dashboard/presentation/view/bottom_navigation_view/settings_view.dart';
 import 'package:kitchening/features/dashboard/presentation/view_model/dashboard_cubit.dart';
+import 'package:kitchening/features/recipe/presentation/view/create_recipe_screen_view.dart';
 
 class DashboardScreenView extends StatefulWidget {
   const DashboardScreenView({super.key});
@@ -14,20 +11,16 @@ class DashboardScreenView extends StatefulWidget {
 }
 
 class _DashboardScreenViewState extends State<DashboardScreenView> {
-  final List<Widget> listOfViews = [
-    const HomeView(),
-    const LibraryView(),
-    const ProfileView(),
-    const SettingsView(),
-  ];
   int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      appBar: AppBar(title: const Text("Dashboard")),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          context.read<DashboardCubit>().navigateToCreateRecipeView(
+              context, const CreateRecipeScreenView());
+        },
         child: const Icon(Icons.add_circle_outline),
       ),
       bottomNavigationBar: NavigationBar(
@@ -46,7 +39,7 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
             padding: EdgeInsets.only(right: 24.0),
             child: NavigationDestination(
               icon: Icon(Icons.favorite),
-              label: 'Favorites',
+              label: 'Liked',
               selectedIcon: Icon(Icons.favorite_border),
             ),
           ),
@@ -65,8 +58,16 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
           ),
         ],
       ),
-      body: BlocBuilder<DashboardCubit, DashboardState>(
-        builder: (context, state) => state.views.elementAt(state.selectedIndex),
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          const SliverAppBar(
+            title: Text("Dashboard"),
+          )
+        ],
+        body: BlocBuilder<DashboardCubit, DashboardState>(
+          builder: (context, state) =>
+              state.views.elementAt(state.selectedIndex),
+        ),
       ),
     );
   }
