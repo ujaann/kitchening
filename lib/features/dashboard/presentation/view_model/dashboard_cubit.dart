@@ -5,6 +5,7 @@ import 'package:kitchening/features/dashboard/presentation/view/bottom_navigatio
 import 'package:kitchening/features/dashboard/presentation/view/bottom_navigation_view/library_view.dart';
 import 'package:kitchening/features/dashboard/presentation/view/bottom_navigation_view/profile_view.dart';
 import 'package:kitchening/features/dashboard/presentation/view/bottom_navigation_view/settings_view.dart';
+import 'package:kitchening/features/recipe/presentation/view/create_recipe_screen_view.dart';
 
 part 'dashboard_state.dart';
 

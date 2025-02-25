@@ -1,25 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:kitchening/app/common/gap.dart';
 
 class RecipeSteps extends StatelessWidget {
-  const RecipeSteps({super.key});
+  final List<String> steps;
+  final VoidCallback onAddStep;
+
+  const RecipeSteps({
+    super.key,
+    required this.steps,
+    required this.onAddStep,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.amber,
-      child: ListView(
-        padding: const EdgeInsets.all(8.0),
-        children: const [
-          Step(
-            count: 1,
-            description: "Step 1",
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Flexible(
+          child: ListView.separated(
+            padding: const EdgeInsets.all(8.0),
+            itemCount: steps.length,
+            separatorBuilder: (context, index) => gap8Y,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Step(
+                  count: index + 1,
+                  description: steps[index],
+                ),
+              );
+            },
           ),
-          Step(
-            count: 2,
-            description: "Step 2",
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: ElevatedButton(
+            onPressed: onAddStep,
+            child: const Text("Add"),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -45,10 +65,13 @@ class Step extends StatelessWidget {
         const SizedBox(
           width: 16,
         ),
-        const Expanded(
+        Expanded(
             child: TextField(
-          decoration: InputDecoration(hintText: "Description"),
-          style: TextStyle(fontSize: 16),
+          maxLines: 3,
+          minLines: 1,
+          decoration: const InputDecoration(hintText: "Description"),
+          controller: TextEditingController(text: description),
+          style: const TextStyle(fontSize: 16),
         )),
       ],
     );

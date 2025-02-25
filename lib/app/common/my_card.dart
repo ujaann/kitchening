@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kitchening/app/common/gap.dart';
+import 'package:kitchening/app/common/styles.dart';
 
 class RecipeCard extends StatelessWidget {
   const RecipeCard({super.key});
@@ -7,7 +8,7 @@ class RecipeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 12,
+      elevation: 2,
       margin: const EdgeInsets.all(8),
       child: SizedBox(
           height: 160,
@@ -62,34 +63,70 @@ class SmallRecipeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 12,
+      elevation: 2,
       margin: const EdgeInsets.all(8),
-      child: SizedBox(
+      child: Container(
           height: 160,
-          width: MediaQuery.sizeOf(context).width * 0.48,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Image.asset(
-                    "assets/images/fry_rice.png",
-                    height: 120,
+          width: 160,
+          padding: const EdgeInsets.all(2.0),
+          child: Stack(
+            children: [
+              Center(
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(12),
+                  ),
+                  child: SizedBox(
+                    width: 150,
+                    height: 150,
+                    child: Image.asset(
+                      "assets/images/fry_rice.png",
+                      height: 120,
 
-                    fit: BoxFit.cover,
-                    // color: Colors.black,
+                      fit: BoxFit.cover,
+                      // color: Colors.black,
+                    ),
                   ),
                 ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Chicken Fried Rice"),
-                    Icon(Icons.favorite_outline),
-                  ],
-                )
-              ],
-            ),
+              ),
+              const Align(
+                alignment: Alignment.bottomCenter,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(12),
+                    bottomRight: Radius.circular(12),
+                  ),
+                  child: ColoredBox(
+                    color: caribeanCurrent,
+                    child: SizedBox(
+                      width: 150,
+                      height: 50,
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 116,
+                            child: Text(
+                              " Chicken Fried Rice",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white),
+                            ),
+                          ),
+                          Icon(
+                            Icons.favorite_outline,
+                            size: 30,
+                            color: Colors.white,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           )),
     );
   }

@@ -5,6 +5,7 @@ class DashboardState extends Equatable {
   final List<Widget> views = const [
     HomeView(),
     LibraryView(),
+    CreateRecipeScreenView(),
     ProfileView(),
     SettingsView(),
   ];

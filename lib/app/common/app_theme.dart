@@ -35,16 +35,28 @@ ThemeData getApplicationTheme() {
           iconSize: 40,
           foregroundColor: papayaWhip),
       //notworking
-      cardColor: lightBlue,
-      cardTheme: const CardTheme(shadowColor: ceramicGray, color: ceramicWhite),
+      cardTheme: const CardTheme(shadowColor: spaceCadet, color: papayaWhip),
       navigationBarTheme: const NavigationBarThemeData(
           backgroundColor: caribeanCurrent,
           indicatorColor: caribeanCurrent,
           labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-          labelTextStyle: WidgetStatePropertyAll(
-              TextStyle(color: papayaWhip, fontWeight: FontWeight.w600)),
+          labelTextStyle: WidgetStatePropertyAll(TextStyle(
+              color: papayaWhip, fontWeight: FontWeight.w400, fontSize: 12)),
           iconTheme: WidgetStatePropertyAll(
               IconThemeData(size: 36, color: papayaWhip))),
+      dataTableTheme: const DataTableThemeData(
+        dividerThickness: 2,
+        headingRowColor: WidgetStatePropertyAll(papayaWhip),
+        headingTextStyle: TextStyle(
+          fontSize: 20,
+        ),
+        decoration: BoxDecoration(
+          color: peach,
+        ),
+      ),
+      dividerTheme: const DividerThemeData(
+        color: Colors.black26,
+      ),
       inputDecorationTheme: const InputDecorationTheme(
           filled: true, fillColor: Color(0x99fefefe)));
 }

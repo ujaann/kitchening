@@ -10,5 +10,12 @@ const gap24Y = SizedBox(
   height: 24,
 );
 const gap8X = SizedBox(
-  height: 8,
+  width: 8,
+);
+
+const gap16X = SizedBox(
+  width: 16,
+);
+const gap24X = SizedBox(
+  width: 24,
 );
