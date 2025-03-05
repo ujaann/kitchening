@@ -21,14 +21,14 @@ class UserLocalDatasource implements IUserDataSource {
   }
 
   @override
-  Future<String> login(String username, String password) async {
+  Future<Map<String, String>> login(String username, String password) async {
     try {
       final userHiveModel = await _hiveService.login(username, password);
       if (userHiveModel == null ||
           userHiveModel == const UserHiveModel.initial()) {
         throw Exception("LOGIN UNSUCCESSFUL");
       } else {
-        return "null";
+        return {"no": "null"};
       }
     } catch (e) {
       throw Exception(e);

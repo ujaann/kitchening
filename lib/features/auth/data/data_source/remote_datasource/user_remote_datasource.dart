@@ -30,7 +30,7 @@ class UserRemoteDatasource implements IUserDataSource {
   }
 
   @override
-  Future<String> login(String username, String password) async {
+  Future<Map<String, String>> login(String username, String password) async {
     try {
       final response = await _dio.post(ApiEndpoints.login, data: {
         "username": username,
@@ -38,8 +38,9 @@ class UserRemoteDatasource implements IUserDataSource {
       });
 
       if (response.statusCode == 200) {
-        final str = response.data['token'];
-        return str;
+        final token = response.data['token'];
+        final userId = response.data['userId'];
+        return {"username": username, "userId": userId, "token": token};
       } else {
         throw Exception(response.statusMessage);
       }

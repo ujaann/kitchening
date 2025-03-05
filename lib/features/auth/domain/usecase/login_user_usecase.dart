@@ -19,7 +19,20 @@ class LoginUserParams extends Equatable {
   List<Object?> get props => [username];
 }
 
-class LoginUserUsecase implements UsecaseWithParams<String, LoginUserParams> {
+class LoginSuccessType extends Equatable {
+  final String username;
+  final String userId;
+  final String token;
+
+  const LoginSuccessType(
+      {required this.username, required this.userId, required this.token});
+
+  @override
+  List<Object?> get props => [userId];
+}
+
+class LoginUserUsecase
+    implements UsecaseWithParams<LoginSuccessType, LoginUserParams> {
   final IUserRepository _userRepository;
   final TokenSharedPrefs tokenSharedPrefs;
 
@@ -28,18 +41,27 @@ class LoginUserUsecase implements UsecaseWithParams<String, LoginUserParams> {
       : _userRepository = userRepository;
 
   @override
-  Future<Either<Failure, String>> call(LoginUserParams params) async {
+  Future<Either<Failure, LoginSuccessType>> call(LoginUserParams params) async {
     final result =
         await _userRepository.login(params.username, params.password);
     return result.fold(
       (failure) => Left(failure),
-      (token) {
+      (success) {
+        final token = success['token'];
+
+        final userId = success['userId'];
+        if (token == null || userId == null) {
+          return const Left(
+              SharedPrefsFailure(message: "token or username or id is null"));
+        }
         tokenSharedPrefs.saveToken(token);
+        tokenSharedPrefs.saveUser(params.username, userId);
         //To check if token is saved
         // tokenSharedPrefs.getToken().then(
         //       (value) => print(value),
         //     );
-        return Right(token);
+        return Right(LoginSuccessType(
+            username: params.username, userId: userId, token: token));
       },
     );
   }

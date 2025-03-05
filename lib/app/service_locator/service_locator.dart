@@ -14,6 +14,11 @@ import 'package:kitchening/features/auth/presentation/view_model/login/login_blo
 import 'package:kitchening/features/auth/presentation/view_model/register/register_bloc.dart';
 import 'package:kitchening/features/dashboard/presentation/view_model/dashboard_cubit.dart';
 import 'package:kitchening/features/onboarding/presentation/view_model/onboarding_cubit.dart';
+import 'package:kitchening/features/recipe/data/data_source/remote/recipe_remote_datasource.dart';
+import 'package:kitchening/features/recipe/data/repository/remote/recipe_remote_repository.dart';
+import 'package:kitchening/features/recipe/domain/usecase/create_recipe_usecase.dart';
+import 'package:kitchening/features/recipe/presentation/view_model/all_recipe_bloc/recipe_bloc.dart';
+import 'package:kitchening/features/recipe/presentation/view_model/single_recipe_cubit/cubit/single_recipe_cubit.dart';
 import 'package:kitchening/features/splash/presentation/view_model/splash_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,6 +29,7 @@ Future<void> initDependencies() async {
   await _initApiService();
   await _initSharedPreferences();
 
+  await _initRecipeScreensDependency();
   await _initDashboardScreenDependencies();
   //dependencies like local repository and local datasource
   await _userLocalDependencies();
@@ -86,6 +92,16 @@ _userRemoteDependencies() async {
   );
 }
 
+_recipeRemoteDependencies() async {
+  getIt.registerLazySingleton<RecipeRemoteDatasource>(
+    () => RecipeRemoteDatasource(dio: getIt<Dio>()),
+  );
+  getIt.registerLazySingleton<RecipeRemoteRepository>(
+    () => RecipeRemoteRepository(
+        recipeRemoteDatasource: getIt<RecipeRemoteDatasource>()),
+  );
+}
+
 _initLoginScreenDependencies() async {
   // ================================ TOKEN SHARED PREFERENCES ================================ //
   getIt.registerLazySingleton<TokenSharedPrefs>(
@@ -125,5 +141,20 @@ _initRegisterScreenDependencies() async {
 _initDashboardScreenDependencies() async {
   getIt.registerFactory<DashboardCubit>(
     () => DashboardCubit(),
+  );
+}
+
+_initRecipeScreensDependency() async {
+  await _recipeRemoteDependencies();
+  getIt.registerLazySingleton<CreateRecipeUsecase>(
+    () => CreateRecipeUsecase(
+        recipeRepository: getIt<RecipeRemoteRepository>(),
+        tokenSharedPrefs: getIt<TokenSharedPrefs>()),
+  );
+  getIt.registerFactory<SingleRecipeCubit>(
+    () => SingleRecipeCubit(),
+  );
+  getIt.registerFactory<RecipeBloc>(
+    () => RecipeBloc(createRecipeUsecase: getIt<CreateRecipeUsecase>()),
   );
 }
