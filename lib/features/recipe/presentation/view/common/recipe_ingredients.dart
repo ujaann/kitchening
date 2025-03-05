@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kitchening/features/recipe/domain/entity/ingredient_entity.dart';
+import 'package:kitchening/features/recipe/presentation/view_model/single_recipe_cubit/cubit/single_recipe_cubit.dart';
 
 class RecipeIngredients extends StatelessWidget {
-  final List<Map<String, String>> ingredients;
-  final VoidCallback onAddIngredient;
-
-  const RecipeIngredients({
-    super.key,
-    required this.ingredients,
-    required this.onAddIngredient,
-  });
+  const RecipeIngredients({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,39 +12,90 @@ class RecipeIngredients extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Flexible(
-          child: ListView.builder(
-            padding: const EdgeInsets.all(8.0),
-            itemCount: ingredients.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        decoration: const InputDecoration(
-                          hintText: "Ingredient",
-                          filled: true,
+          child: BlocBuilder<SingleRecipeCubit, SingleRecipeState>(
+            builder: (context, state) {
+              print(state.ingredients);
+              return ListView.builder(
+                padding: const EdgeInsets.all(8.0),
+                itemCount: state.ingredients.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            decoration: const InputDecoration(
+                              hintText: "Ingredient",
+                              filled: true,
+                            ),
+                            controller: TextEditingController(
+                              text: state.ingredients[index].ingredient,
+                            ),
+                            onChanged: (value) {
+                              context
+                                  .read<SingleRecipeCubit>()
+                                  .updateIngredient(
+                                      index,
+                                      value,
+                                      state.ingredients[index].quantity,
+                                      state.ingredients[index].measurement);
+                            },
+                          ),
                         ),
-                        controller: TextEditingController(
-                          text: ingredients[index]["ingredient"],
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: TextField(
+                            decoration: const InputDecoration(
+                              hintText: "Quantity",
+                              filled: true,
+                            ),
+                            controller: TextEditingController(
+                              text:
+                                  state.ingredients[index].quantity.toString(),
+                            ),
+                            onChanged: (value) {
+                              context
+                                  .read<SingleRecipeCubit>()
+                                  .updateIngredient(
+                                      index,
+                                      state.ingredients[index].ingredient,
+                                      double.tryParse(value) ?? 0.0,
+                                      state.ingredients[index].measurement);
+                            },
+                          ),
                         ),
-                      ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: TextField(
+                            decoration: const InputDecoration(
+                              hintText: "Measurement",
+                              filled: true,
+                            ),
+                            controller: TextEditingController(
+                              text: state.ingredients[index].measurement,
+                            ),
+                            onChanged: (value) {
+                              context
+                                  .read<SingleRecipeCubit>()
+                                  .updateIngredient(
+                                      index,
+                                      state.ingredients[index].ingredient,
+                                      state.ingredients[index].quantity,
+                                      value);
+                            },
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: () => context
+                              .read<SingleRecipeCubit>()
+                              .removeIngredient(index),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: TextField(
-                        decoration: const InputDecoration(
-                          hintText: "Quantity",
-                          filled: true,
-                        ),
-                        controller: TextEditingController(
-                          text: ingredients[index]["quantity"],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  );
+                },
               );
             },
           ),
@@ -56,7 +103,12 @@ class RecipeIngredients extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: 8.0),
           child: ElevatedButton(
-            onPressed: onAddIngredient,
+            onPressed: () {
+              context.read<SingleRecipeCubit>().addIngredient(
+                    const IngredientEntity(
+                        ingredient: "", quantity: 0.0, measurement: ""),
+                  );
+            },
             child: const Text("Add"),
           ),
         ),

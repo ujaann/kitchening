@@ -16,34 +16,32 @@ class RecipeCard extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(top: 24.0, left: 16, right: 16),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              spacing: 20,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset(
-                  "assets/images/momo.png",
-                  height: 120,
-                  width: 120,
+                ClipRRect(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(12),
+                  ),
+                  child: SizedBox(
+                    child: Image.asset(
+                      "assets/images/momo.png",
+                      width: 120,
+                    ),
+                  ),
                 ),
                 const Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Momo"),
                     Row(
                       children: [
-                        Text("Difficulty:"),
-                        Icon(Icons.star_rate),
-                        Icon(Icons.star_rate),
-                        Icon(Icons.star_rate),
-                        Icon(Icons.star_rate_outlined),
+                        Text("Steps: 12"),
                       ],
                     ),
                     Row(
                       children: [
-                        Text("Rating:"),
-                        Icon(Icons.star_rate),
-                        Icon(Icons.star_rate),
-                        Icon(Icons.star_rate),
-                        Icon(Icons.star_rate_outlined),
+                        Text("Likes: 12"),
                       ],
                     ),
                     Text("Ujan Sthapit"),
@@ -116,7 +114,7 @@ class SmallRecipeCard extends StatelessWidget {
                             ),
                           ),
                           Icon(
-                            Icons.favorite_outline,
+                            Icons.arrow_forward,
                             size: 30,
                             color: Colors.white,
                           ),

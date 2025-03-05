@@ -36,6 +36,16 @@ ThemeData getApplicationTheme() {
           foregroundColor: papayaWhip),
       //notworking
       cardTheme: const CardTheme(shadowColor: spaceCadet, color: papayaWhip),
+      dropdownMenuTheme: const DropdownMenuThemeData(
+          inputDecorationTheme: InputDecorationTheme(
+              filled: true,
+              fillColor: papayaWhip,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+              )),
+          menuStyle: MenuStyle(
+            backgroundColor: WidgetStatePropertyAll(papayaWhip),
+          )),
       navigationBarTheme: const NavigationBarThemeData(
           backgroundColor: caribeanCurrent,
           indicatorColor: caribeanCurrent,
