@@ -46,4 +46,19 @@ class RecipeRemoteRepository implements IRecipeRepository {
       return Left(ApiFailure(message: e.toString(), statusCode: 500));
     }
   }
+
+  @override
+  Future<Either<ApiFailure, void>> likeRecipe(
+      String recipeId, String userId, String username) async {
+    try {
+      await _recipeRemoteDatasource.likeRecipe(recipeId, userId, username);
+      return const Right(null);
+    } on DioException catch (e) {
+      return Left(ApiFailure(
+          message: e.message ?? e.toString(),
+          statusCode: e.response?.statusCode ?? 500));
+    } catch (e) {
+      return Left(ApiFailure(message: e.toString(), statusCode: 500));
+    }
+  }
 }

@@ -7,4 +7,6 @@ abstract interface class IRecipeRepository {
       RecipeEntity recipeEntity, String token);
   Future<Either<ApiFailure, void>> deleteRecipe(String recipeId, String token);
   Future<Either<ApiFailure, List<RecipeEntity>>> getAllRecipe();
+  Future<Either<ApiFailure, void>> likeRecipe(
+      String recipeId, String userId, String username);
 }

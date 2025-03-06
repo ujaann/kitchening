@@ -64,4 +64,73 @@ class RecipeRemoteDatasource implements IRecipeDatasource {
       rethrow;
     }
   }
+
+  @override
+  Future<void> likeRecipe(
+      String recipeId, String userId, String username) async {
+    try {
+      final response = await _dio.patch('${ApiEndpoints.likeRecipe}$recipeId',
+          data: {"userId": userId, "username": username});
+      if (response.statusCode == 200) {
+        return;
+      } else {
+        throw DioException(
+            message: "Recipe Like Unsuccessful",
+            response: response,
+            requestOptions: response.requestOptions);
+      }
+    } on DioException {
+      rethrow;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<RecipeEntity>> getUserAllRecipe(String userId) async {
+    try {
+      final response =
+          await _dio.patch('${ApiEndpoints.getUserRecipes}$userId');
+      if (response.statusCode == 200) {
+        final data = response.data as List<dynamic>;
+        final recipeList = data
+            .map((recipe) => RecipeApiModel.fromJson(recipe).toEntity())
+            .toList();
+        return recipeList;
+      } else {
+        throw DioException(
+            message: "Recipe Fetch Unsuccessful",
+            response: response,
+            requestOptions: response.requestOptions);
+      }
+    } on DioException {
+      rethrow;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future getUserLikedRecipe(String userId) async {
+    try {
+      final response =
+          await _dio.patch('${ApiEndpoints.getUserlikedRecipe}$userId');
+      if (response.statusCode == 200) {
+        final data = response.data as List<dynamic>;
+        final recipeList = data
+            .map((recipe) => RecipeApiModel.fromJson(recipe).toEntity())
+            .toList();
+        return recipeList;
+      } else {
+        throw DioException(
+            message: "Recipe Fetch Unsuccessful",
+            response: response,
+            requestOptions: response.requestOptions);
+      }
+    } on DioException {
+      rethrow;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

@@ -7,7 +7,7 @@ class DashboardState extends Equatable {
       value: getIt(),
       child: const HomeView(),
     ),
-    const LibraryView(),
+    const FavoriteView(),
     MultiBlocProvider(
       providers: [
         BlocProvider<RecipeBloc>.value(
@@ -19,7 +19,7 @@ class DashboardState extends Equatable {
       ],
       child: const CreateRecipeScreenView(),
     ),
-    const ProfileView(),
+    const LibraryView(),
     const SettingsView(),
   ];
 

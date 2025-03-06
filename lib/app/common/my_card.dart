@@ -6,10 +6,11 @@ import 'package:kitchening/features/recipe/domain/entity/recipe_entity.dart';
 
 class RecipeCard extends StatelessWidget {
   final RecipeEntity recipeEntity;
-
+  final VoidCallback onTap;
   const RecipeCard({
     super.key,
     required this.recipeEntity,
+    required this.onTap,
   });
 
   @override
@@ -25,20 +26,23 @@ class RecipeCard extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(12)),
-                child: SizedBox(
-                  child: recipeEntity.imageName != null
-                      ? Image.network(
-                          "${ApiEndpoints.baseUrl}${ApiEndpoints.recipeImage}${recipeEntity.imageName}",
-                          height: 120,
-                          fit: BoxFit.cover,
-                        )
-                      : Image.asset(
-                          'assets/images/logo.png',
-                          height: 120,
-                          fit: BoxFit.cover,
-                        ),
+              GestureDetector(
+                onTap: onTap,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(12)),
+                  child: SizedBox(
+                    child: recipeEntity.imageName != null
+                        ? Image.network(
+                            "${ApiEndpoints.baseUrl}${ApiEndpoints.recipeImage}${recipeEntity.imageName}",
+                            height: 120,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            'assets/images/logo.png',
+                            height: 120,
+                            fit: BoxFit.cover,
+                          ),
+                  ),
                 ),
               ),
               const SizedBox(width: 20),

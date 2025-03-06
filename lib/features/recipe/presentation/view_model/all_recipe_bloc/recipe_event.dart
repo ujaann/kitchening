@@ -4,6 +4,14 @@ sealed class RecipeEvent extends Equatable {
   const RecipeEvent();
 }
 
+final class LikeRecipeEvent extends RecipeEvent {
+  final String recipeId;
+
+  const LikeRecipeEvent({required this.recipeId});
+  @override
+  List<Object?> get props => [recipeId];
+}
+
 final class GetAllRecipeEvent extends RecipeEvent {
   @override
   List<Object?> get props => [];

@@ -6,6 +6,7 @@ import 'package:kitchening/features/recipe/domain/entity/ingredient_entity.dart'
 import 'package:kitchening/features/recipe/domain/entity/recipe_entity.dart';
 import 'package:kitchening/features/recipe/domain/usecase/create_recipe_usecase.dart';
 import 'package:kitchening/features/recipe/domain/usecase/get_all_recipe_usecase.dart';
+import 'package:kitchening/features/recipe/domain/usecase/like_recipe_usecase.dart';
 
 part 'recipe_event.dart';
 part 'recipe_state.dart';
@@ -13,18 +14,22 @@ part 'recipe_state.dart';
 class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
   final CreateRecipeUsecase _createRecipeUsecase;
   final GetAllRecipeUsecase _getAllRecipeUsecase;
+  final LikeRecipeUsecase _likeRecipeUsecase;
 
   RecipeBloc({
     required CreateRecipeUsecase createRecipeUsecase,
     required GetAllRecipeUsecase getAllRecipeUsecase,
+    required LikeRecipeUsecase likeRecipeUsecase,
   })  : _createRecipeUsecase = createRecipeUsecase,
         _getAllRecipeUsecase = getAllRecipeUsecase,
+        _likeRecipeUsecase = likeRecipeUsecase,
         super(const RecipeInitial()) {
     on<RecipeEvent>((event, emit) {
       // TODO: implement event handler
     });
     on<CreateRecipeEvent>(_onCreateRecipe);
     on<GetAllRecipeEvent>(_onGetAllRecipe);
+    on<LikeRecipeEvent>(_onLikeRecipe);
 
     add(GetAllRecipeEvent());
   }
@@ -55,6 +60,19 @@ class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
         emit(RecipeError(message: "${failure.statusCode} ${failure.message}"));
       },
       (recipes) => emit(RecipeSuccess(recipes: recipes)),
+    );
+  }
+
+  Future<void> _onLikeRecipe(
+      LikeRecipeEvent event, Emitter<RecipeState> emit) async {
+    emit(RecipeLoading(recipes: state.recipes));
+    final result = await _likeRecipeUsecase
+        .call(LikeRecipeParams(recipeId: event.recipeId));
+    result.fold(
+      (failure) {
+        emit(RecipeError(message: "${failure.statusCode} ${failure.message}"));
+      },
+      (recipes) => emit(RecipeSuccess(recipes: state.recipes)),
     );
   }
 }

@@ -18,6 +18,7 @@ import 'package:kitchening/features/recipe/data/data_source/remote/recipe_remote
 import 'package:kitchening/features/recipe/data/repository/remote/recipe_remote_repository.dart';
 import 'package:kitchening/features/recipe/domain/usecase/create_recipe_usecase.dart';
 import 'package:kitchening/features/recipe/domain/usecase/get_all_recipe_usecase.dart';
+import 'package:kitchening/features/recipe/domain/usecase/like_recipe_usecase.dart';
 import 'package:kitchening/features/recipe/presentation/view_model/all_recipe_bloc/recipe_bloc.dart';
 import 'package:kitchening/features/recipe/presentation/view_model/single_recipe_cubit/cubit/single_recipe_cubit.dart';
 import 'package:kitchening/features/splash/presentation/view_model/splash_cubit.dart';
@@ -157,11 +158,18 @@ _initRecipeScreensDependency() async {
       recipeRepository: getIt<RecipeRemoteRepository>(),
     ),
   );
+  getIt.registerLazySingleton<LikeRecipeUsecase>(
+    () => LikeRecipeUsecase(
+      sharedPrefs: getIt<TokenSharedPrefs>(),
+      recipeRepository: getIt<RecipeRemoteRepository>(),
+    ),
+  );
   getIt.registerFactory<SingleRecipeCubit>(
     () => SingleRecipeCubit(),
   );
   getIt.registerFactory<RecipeBloc>(
     () => RecipeBloc(
+      likeRecipeUsecase: getIt<LikeRecipeUsecase>(),
       createRecipeUsecase: getIt<CreateRecipeUsecase>(),
       getAllRecipeUsecase: getIt<GetAllRecipeUsecase>(),
     ),

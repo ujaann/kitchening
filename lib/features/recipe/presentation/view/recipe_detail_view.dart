@@ -4,6 +4,7 @@ import 'package:kitchening/core/constants/api_endpoints.dart';
 import 'package:kitchening/features/recipe/domain/entity/recipe_entity.dart';
 import 'package:kitchening/features/recipe/presentation/view/common/recipe_ingredients.dart';
 import 'package:kitchening/features/recipe/presentation/view/common/recipe_steps.dart';
+import 'package:kitchening/features/recipe/presentation/view_model/all_recipe_bloc/recipe_bloc.dart';
 import 'package:kitchening/features/recipe/presentation/view_model/single_recipe_cubit/cubit/single_recipe_cubit.dart';
 
 class RecipeDetailView extends StatefulWidget {
@@ -33,8 +34,18 @@ class _RecipeDetailViewState extends State<RecipeDetailView> {
         appBar: AppBar(
           title: Text(widget.recipeEntity.recipeName),
           actions: [
-            IconButton(
-                onPressed: () {}, icon: const Icon(Icons.favorite_outline)),
+            BlocBuilder<RecipeBloc, RecipeState>(
+              builder: (context, state) {
+                return IconButton(
+                  onPressed: () => context.read<RecipeBloc>().add(
+                      LikeRecipeEvent(
+                          recipeId: widget.recipeEntity.recipeId ?? "")),
+                  icon: Icon(state is RecipeSuccess
+                      ? Icons.favorite
+                      : Icons.favorite_outline),
+                );
+              },
+            ),
             Text(widget.recipeEntity.cuisine),
           ],
           bottom: const TabBar(
