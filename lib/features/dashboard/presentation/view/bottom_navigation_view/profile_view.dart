@@ -5,6 +5,6 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("Profile Screen"));
+    return const Center(child: Flexible(child: Text("Profile Screen")));
   }
 }

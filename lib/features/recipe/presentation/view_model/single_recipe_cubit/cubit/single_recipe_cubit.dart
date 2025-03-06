@@ -5,7 +5,12 @@ import 'package:kitchening/features/recipe/domain/entity/ingredient_entity.dart'
 part 'single_recipe_state.dart';
 
 class SingleRecipeCubit extends Cubit<SingleRecipeState> {
-  SingleRecipeCubit() : super(SingleRecipeState.initial());
+  SingleRecipeCubit({SingleRecipeState? recipeState})
+      : super(SingleRecipeState.initial()) {
+    if (recipeState != null) {
+      emit(recipeState);
+    }
+  }
 
   void addIngredient(IngredientEntity ingredient) {
     final updatedIngredients = List<IngredientEntity>.from(state.ingredients)

@@ -34,8 +34,16 @@ class RecipeRemoteRepository implements IRecipeRepository {
   }
 
   @override
-  Future<Either<ApiFailure, List<RecipeEntity>>> getAllRecipe() {
-    // TODO: implement getAllRecipe
-    throw UnimplementedError();
+  Future<Either<ApiFailure, List<RecipeEntity>>> getAllRecipe() async {
+    try {
+      final response = await _recipeRemoteDatasource.getAllRecipe();
+      return Right(response);
+    } on DioException catch (e) {
+      return Left(ApiFailure(
+          message: e.message ?? e.toString(),
+          statusCode: e.response?.statusCode ?? 500));
+    } catch (e) {
+      return Left(ApiFailure(message: e.toString(), statusCode: 500));
+    }
   }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kitchening/app/common/my_card.dart';
 import 'package:kitchening/app/common/styles.dart';
+import 'package:kitchening/features/recipe/presentation/view/recipe_detail_view.dart';
+import 'package:kitchening/features/recipe/presentation/view_model/all_recipe_bloc/recipe_bloc.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -97,12 +100,39 @@ class HomeView extends StatelessWidget {
               style: TextStyle(fontSize: 20),
             ),
           ),
-          const SingleChildScrollView(
+          SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                SmallRecipeCard(),
-                SmallRecipeCard(),
+                BlocBuilder<RecipeBloc, RecipeState>(
+                  builder: (context, state) {
+                    if (state is RecipeLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (state is RecipeSuccess) {
+                      return Row(
+                        children: state.recipes.map((recipe) {
+                          return SmallRecipeCard(
+                            onIconPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      RecipeDetailView(recipeEntity: recipe),
+                                ),
+                              );
+                            },
+                            recipeEntity: recipe,
+                            // Add other properties as needed
+                          );
+                        }).toList(),
+                      );
+                    } else if (state is RecipeError) {
+                      return Center(child: Text(state.message));
+                    } else {
+                      return const Center(child: Text('No recipes found.'));
+                    }
+                  },
+                )
               ],
             ),
           ),

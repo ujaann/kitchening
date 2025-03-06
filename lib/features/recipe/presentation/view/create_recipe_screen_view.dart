@@ -117,6 +117,7 @@ class _CreateRecipeScreenViewState extends State<CreateRecipeScreenView> {
                       Checkbox(
                           value: !_isPublic,
                           onChanged: (value) {
+                            context.read<RecipeBloc>().add(GetAllRecipeEvent());
                             setState(() {
                               _isPublic = !_isPublic;
                             });
@@ -173,11 +174,15 @@ class _CreateRecipeScreenViewState extends State<CreateRecipeScreenView> {
                   ),
                   BlocProvider<SingleRecipeCubit>.value(
                     value: context.read<SingleRecipeCubit>(),
-                    child: const RecipeIngredients(),
+                    child: const RecipeIngredients(
+                      isEditable: true,
+                    ),
                   ),
                   BlocProvider<SingleRecipeCubit>.value(
                     value: context.read<SingleRecipeCubit>(),
-                    child: const RecipeSteps(),
+                    child: const RecipeSteps(
+                      isEditable: true,
+                    ),
                   ),
                 ],
               ),

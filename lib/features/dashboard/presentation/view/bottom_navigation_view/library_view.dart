@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kitchening/app/common/my_card.dart';
 
 class LibraryView extends StatelessWidget {
   const LibraryView({super.key});
@@ -14,9 +13,8 @@ class LibraryView extends StatelessWidget {
           const Text("Liked recipes", style: TextStyle(fontSize: 20)),
           Flexible(
             child: ListView.builder(
-              itemCount: 5,
-              itemBuilder: (context, index) => const RecipeCard(),
-            ),
+                itemCount: 5,
+                itemBuilder: (context, index) => const Text("data")),
           ),
         ],
       ),

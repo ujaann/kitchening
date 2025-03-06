@@ -64,6 +64,7 @@ class RecipeApiModel {
       cuisine: cuisine,
       ingredients: ingredients.map((ing) => ing.toEntity()).toList(),
       steps: steps,
+      imageName: image,
       user: UserEntity(
           username: author.username,
           userId: author.id,

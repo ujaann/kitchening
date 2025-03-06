@@ -4,7 +4,9 @@ import 'package:kitchening/features/recipe/domain/entity/ingredient_entity.dart'
 import 'package:kitchening/features/recipe/presentation/view_model/single_recipe_cubit/cubit/single_recipe_cubit.dart';
 
 class RecipeIngredients extends StatelessWidget {
-  const RecipeIngredients({super.key});
+  final bool? isEditable;
+
+  const RecipeIngredients({super.key, this.isEditable});
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +34,19 @@ class RecipeIngredients extends StatelessWidget {
                             controller: TextEditingController(
                               text: state.ingredients[index].ingredient,
                             ),
-                            onChanged: (value) {
-                              context
-                                  .read<SingleRecipeCubit>()
-                                  .updateIngredient(
-                                      index,
-                                      value,
-                                      state.ingredients[index].quantity,
-                                      state.ingredients[index].measurement);
-                            },
+                            onChanged: isEditable == true
+                                ? (value) {
+                                    context
+                                        .read<SingleRecipeCubit>()
+                                        .updateIngredient(
+                                            index,
+                                            value,
+                                            state.ingredients[index].quantity,
+                                            state.ingredients[index]
+                                                .measurement);
+                                  }
+                                : null,
+                            readOnly: isEditable == false,
                           ),
                         ),
                         const SizedBox(width: 16),
@@ -54,15 +60,19 @@ class RecipeIngredients extends StatelessWidget {
                               text:
                                   state.ingredients[index].quantity.toString(),
                             ),
-                            onChanged: (value) {
-                              context
-                                  .read<SingleRecipeCubit>()
-                                  .updateIngredient(
-                                      index,
-                                      state.ingredients[index].ingredient,
-                                      double.tryParse(value) ?? 0.0,
-                                      state.ingredients[index].measurement);
-                            },
+                            onChanged: isEditable == true
+                                ? (value) {
+                                    context
+                                        .read<SingleRecipeCubit>()
+                                        .updateIngredient(
+                                            index,
+                                            state.ingredients[index].ingredient,
+                                            double.tryParse(value) ?? 0.0,
+                                            state.ingredients[index]
+                                                .measurement);
+                                  }
+                                : null,
+                            readOnly: isEditable == false,
                           ),
                         ),
                         const SizedBox(width: 16),
@@ -75,23 +85,27 @@ class RecipeIngredients extends StatelessWidget {
                             controller: TextEditingController(
                               text: state.ingredients[index].measurement,
                             ),
-                            onChanged: (value) {
-                              context
-                                  .read<SingleRecipeCubit>()
-                                  .updateIngredient(
-                                      index,
-                                      state.ingredients[index].ingredient,
-                                      state.ingredients[index].quantity,
-                                      value);
-                            },
+                            onChanged: isEditable == true
+                                ? (value) {
+                                    context
+                                        .read<SingleRecipeCubit>()
+                                        .updateIngredient(
+                                            index,
+                                            state.ingredients[index].ingredient,
+                                            state.ingredients[index].quantity,
+                                            value);
+                                  }
+                                : null,
+                            readOnly: isEditable == false,
                           ),
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.close),
-                          onPressed: () => context
-                              .read<SingleRecipeCubit>()
-                              .removeIngredient(index),
-                        ),
+                        if (isEditable == true)
+                          IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () => context
+                                .read<SingleRecipeCubit>()
+                                .removeIngredient(index),
+                          ),
                       ],
                     ),
                   );
@@ -100,18 +114,19 @@ class RecipeIngredients extends StatelessWidget {
             },
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(right: 8.0),
-          child: ElevatedButton(
-            onPressed: () {
-              context.read<SingleRecipeCubit>().addIngredient(
-                    const IngredientEntity(
-                        ingredient: "", quantity: 0.0, measurement: ""),
-                  );
-            },
-            child: const Text("Add"),
+        if (isEditable == true)
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: ElevatedButton(
+              onPressed: () {
+                context.read<SingleRecipeCubit>().addIngredient(
+                      const IngredientEntity(
+                          ingredient: "", quantity: 0.0, measurement: ""),
+                    );
+              },
+              child: const Text("Add"),
+            ),
           ),
-        ),
       ],
     );
   }

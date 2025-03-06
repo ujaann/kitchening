@@ -3,7 +3,10 @@ part of 'dashboard_cubit.dart';
 class DashboardState extends Equatable {
   final int selectedIndex;
   final List<Widget> views = [
-    const HomeView(),
+    BlocProvider<RecipeBloc>.value(
+      value: getIt(),
+      child: const HomeView(),
+    ),
     const LibraryView(),
     MultiBlocProvider(
       providers: [
