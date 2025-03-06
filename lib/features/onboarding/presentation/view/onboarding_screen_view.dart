@@ -39,7 +39,7 @@ class _OnboardingScreenViewState extends State<OnboardingScreenView> {
                     ),
                     OnboardingElement(
                       subtitle:
-                          "Find delicious recipes from around the world, tailored to taste",
+                          "Find delicious recipes around the world, tailored to taste",
                       imagePath: "assets/images/image2.jpg",
                     ),
                     OnboardingElement(
@@ -63,7 +63,7 @@ class _OnboardingScreenViewState extends State<OnboardingScreenView> {
             ),
             SizedBox(
               // width: 290,
-              child: OutlinedButton(
+              child: ElevatedButton(
                 onPressed: () =>
                     context.read<OnboardingCubit>().navigateToLogin(context),
                 child: const Padding(

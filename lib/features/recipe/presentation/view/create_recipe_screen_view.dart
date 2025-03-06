@@ -36,7 +36,7 @@ final List<CuisineEntry> entries = UnmodifiableListView<CuisineEntry>([
 
 class _CreateRecipeScreenViewState extends State<CreateRecipeScreenView> {
   File? _img;
-  bool _isPublic = false;
+
   String _cuisine = "nepali";
   final TextEditingController _recipeName = TextEditingController();
 
@@ -112,17 +112,6 @@ class _CreateRecipeScreenViewState extends State<CreateRecipeScreenView> {
                         }),
                       ),
                       const Spacer(),
-                      const Tooltip(
-                          message: "Recipe will be hidden",
-                          child: Text("Private?")),
-                      Checkbox(
-                          value: !_isPublic,
-                          onChanged: (value) {
-                            context.read<RecipeBloc>().add(GetAllRecipeEvent());
-                            setState(() {
-                              _isPublic = !_isPublic;
-                            });
-                          }),
                     ],
                   ),
                 ],
@@ -211,6 +200,9 @@ class _CreateRecipeScreenViewState extends State<CreateRecipeScreenView> {
                         steps: state.steps,
                         cuisine: _cuisine,
                       ));
+                  _recipeName.text = "";
+                  context.read<SingleRecipeCubit>().clearState();
+                  _cuisine = "";
                 },
                 child: const Text("Create"),
               ),

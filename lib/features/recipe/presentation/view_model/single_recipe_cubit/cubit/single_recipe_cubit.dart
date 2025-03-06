@@ -75,4 +75,8 @@ class SingleRecipeCubit extends Cubit<SingleRecipeState> {
       recipeId: state.recipeId,
     ));
   }
+
+  void clearState() {
+    emit(SingleRecipeState.initial());
+  }
 }

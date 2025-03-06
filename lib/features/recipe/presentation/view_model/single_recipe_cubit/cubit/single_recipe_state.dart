@@ -12,10 +12,7 @@ final class SingleRecipeState extends Equatable {
   });
   SingleRecipeState.initial()
       : ingredients = [
-          const IngredientEntity(
-              ingredient: "Add ingredient",
-              quantity: 0.0,
-              measurement: "_Add measurement")
+          const IngredientEntity(ingredient: "", quantity: 0.0, measurement: "")
         ],
         recipeId = "_empty.recipeId",
         steps = ["Add steps"];
