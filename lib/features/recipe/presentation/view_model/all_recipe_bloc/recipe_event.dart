@@ -22,6 +22,11 @@ final class GetUserLikedRecipeEvent extends RecipeEvent {
   List<Object?> get props => [];
 }
 
+final class GetUserAllRecipeEvent extends RecipeEvent {
+  @override
+  List<Object?> get props => [];
+}
+
 final class CreateRecipeEvent extends RecipeEvent {
   final String recipeTitle;
   final String cuisine;

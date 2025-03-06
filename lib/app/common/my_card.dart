@@ -19,18 +19,19 @@ class RecipeCard extends StatelessWidget {
       elevation: 2,
       margin: const EdgeInsets.all(8),
       child: SizedBox(
-        height: 160,
+        // height: 160,
         width: MediaQuery.sizeOf(context).width * 0.9,
         child: Padding(
-          padding: const EdgeInsets.only(top: 24.0, left: 16, right: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               GestureDetector(
                 onTap: onTap,
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(12)),
                   child: SizedBox(
+                    width: 120,
                     child: recipeEntity.imageName != null
                         ? Image.network(
                             "${ApiEndpoints.baseUrl}${ApiEndpoints.recipeImage}${recipeEntity.imageName}",
@@ -46,22 +47,37 @@ class RecipeCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(recipeEntity.recipeName),
-                  Row(
-                    children: [
-                      Text("Steps: ${recipeEntity.steps.length}"),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text("Likes: ${recipeEntity.likeCount}"),
-                    ],
-                  ),
-                  const Text("Ujan Sthapit"),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      recipeEntity.recipeName,
+                      overflow: TextOverflow.fade,
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "Steps: ${recipeEntity.steps.length}",
+                          overflow: TextOverflow.fade,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "Likes: ${recipeEntity.likeCount}",
+                          overflow: TextOverflow.fade,
+                        ),
+                      ],
+                    ),
+                    Text(
+                      recipeEntity.user.username,
+                      overflow: TextOverflow.fade,
+                    ),
+                  ],
+                ),
               ),
               gap8X,
             ],

@@ -9,4 +9,8 @@ abstract interface class IRecipeRepository {
   Future<Either<ApiFailure, List<RecipeEntity>>> getAllRecipe();
   Future<Either<ApiFailure, void>> likeRecipe(
       String recipeId, String userId, String username);
+  Future<Either<ApiFailure, List<RecipeEntity>>> getUserAllRecipe(
+      String userId);
+  Future<Either<ApiFailure, List<RecipeEntity>>> getUserLikedRecipe(
+      String userId);
 }

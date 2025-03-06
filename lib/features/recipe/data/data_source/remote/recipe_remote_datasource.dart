@@ -89,8 +89,7 @@ class RecipeRemoteDatasource implements IRecipeDatasource {
   @override
   Future<List<RecipeEntity>> getUserAllRecipe(String userId) async {
     try {
-      final response =
-          await _dio.patch('${ApiEndpoints.getUserRecipes}$userId');
+      final response = await _dio.get('${ApiEndpoints.getUserRecipes}$userId');
       if (response.statusCode == 200) {
         final data = response.data as List<dynamic>;
         final recipeList = data
@@ -111,10 +110,10 @@ class RecipeRemoteDatasource implements IRecipeDatasource {
   }
 
   @override
-  Future getUserLikedRecipe(String userId) async {
+  Future<List<RecipeEntity>> getUserLikedRecipe(String userId) async {
     try {
       final response =
-          await _dio.patch('${ApiEndpoints.getUserlikedRecipe}$userId');
+          await _dio.get('${ApiEndpoints.getUserlikedRecipe}$userId');
       if (response.statusCode == 200) {
         final data = response.data as List<dynamic>;
         final recipeList = data

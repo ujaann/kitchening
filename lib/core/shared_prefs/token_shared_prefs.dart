@@ -8,6 +8,16 @@ class TokenSharedPrefs {
   TokenSharedPrefs({required SharedPreferences sharedPreferences})
       : _sharedPreferences = sharedPreferences;
 
+  Future<Either<Failure, bool>> clearAll() async {
+    try {
+      final success = await _sharedPreferences.clear();
+
+      return Right(success);
+    } catch (e) {
+      return Left(SharedPrefsFailure(message: e.toString()));
+    }
+  }
+
   Future<Either<Failure, void>> saveToken(String token) async {
     try {
       await _sharedPreferences.setString('token', token);

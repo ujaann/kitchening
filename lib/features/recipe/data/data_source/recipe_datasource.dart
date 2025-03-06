@@ -5,7 +5,7 @@ abstract interface class IRecipeDatasource {
   Future<void> deleteRecipe(String recipeId, String token);
   Future<List<RecipeEntity>> getAllRecipe();
   Future<List<RecipeEntity>> getUserAllRecipe(String userId);
-  Future<dynamic> getUserLikedRecipe(String userId);
+  Future<List<RecipeEntity>> getUserLikedRecipe(String userId);
 
   Future<void> likeRecipe(String recipeId, String userId, String username);
 }

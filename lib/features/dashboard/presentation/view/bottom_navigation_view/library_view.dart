@@ -16,7 +16,7 @@ class _LibraryViewState extends State<LibraryView> {
   @override
   void initState() {
     super.initState();
-    context.read<RecipeBloc>().add(GetAllRecipeEvent());
+    context.read<RecipeBloc>().add(GetUserAllRecipeEvent());
   }
 
   @override
