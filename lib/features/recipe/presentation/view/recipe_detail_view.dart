@@ -46,7 +46,10 @@ class _RecipeDetailViewState extends State<RecipeDetailView> {
                 );
               },
             ),
-            Text(widget.recipeEntity.cuisine),
+            Padding(
+              padding: const EdgeInsets.only(right: 4.0),
+              child: Text(widget.recipeEntity.cuisine.substring(0, 4)),
+            ),
           ],
           bottom: const TabBar(
             labelPadding: EdgeInsets.symmetric(vertical: 6),

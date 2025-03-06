@@ -45,3 +45,16 @@ final class CreateRecipeEvent extends RecipeEvent {
   @override
   List<Object> get props => [recipeTitle, ingredients, steps];
 }
+
+class UploadImageEvent extends RecipeEvent {
+  // final BuildContext context;
+  final File image;
+
+  const UploadImageEvent({
+    // required this.context,
+    required this.image,
+  });
+
+  @override
+  List<Object?> get props => [image];
+}

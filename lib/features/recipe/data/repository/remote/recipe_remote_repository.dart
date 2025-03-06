@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:kitchening/core/error/failure.dart';
@@ -89,6 +91,18 @@ class RecipeRemoteRepository implements IRecipeRepository {
           statusCode: e.response?.statusCode ?? 500));
     } catch (e) {
       return Left(ApiFailure(message: e.toString(), statusCode: 500));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> uploadRecipePicture(
+      File file, String token) async {
+    try {
+      final fileName =
+          await _recipeRemoteDatasource.uploadRecipePicture(file, token);
+      return Right(fileName);
+    } catch (e) {
+      return Left(ApiFailure(message: e.toString(), statusCode: 400));
     }
   }
 }

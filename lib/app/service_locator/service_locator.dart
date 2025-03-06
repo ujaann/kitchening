@@ -14,6 +14,10 @@ import 'package:kitchening/features/auth/presentation/view_model/login/login_blo
 import 'package:kitchening/features/auth/presentation/view_model/register/register_bloc.dart';
 import 'package:kitchening/features/dashboard/presentation/view_model/dashboard_cubit.dart';
 import 'package:kitchening/features/onboarding/presentation/view_model/onboarding_cubit.dart';
+import 'package:kitchening/features/profile/data/datasource/remote/profile_remote_datasource.dart';
+import 'package:kitchening/features/profile/data/repository/profile_remote_repository.dart';
+import 'package:kitchening/features/profile/domain/usecases/get_profile_usecase.dart';
+import 'package:kitchening/features/profile/presentation/view_model/profile_cubit.dart';
 import 'package:kitchening/features/recipe/data/data_source/remote/recipe_remote_datasource.dart';
 import 'package:kitchening/features/recipe/data/repository/remote/recipe_remote_repository.dart';
 import 'package:kitchening/features/recipe/domain/usecase/create_recipe_usecase.dart';
@@ -21,6 +25,7 @@ import 'package:kitchening/features/recipe/domain/usecase/get_all_recipe_usecase
 import 'package:kitchening/features/recipe/domain/usecase/get_liked_recipe_usecase.dart';
 import 'package:kitchening/features/recipe/domain/usecase/get_user_recipe_usecase.dart';
 import 'package:kitchening/features/recipe/domain/usecase/like_recipe_usecase.dart';
+import 'package:kitchening/features/recipe/domain/usecase/upload_recipe_image_usecase.dart';
 import 'package:kitchening/features/recipe/presentation/view_model/all_recipe_bloc/recipe_bloc.dart';
 import 'package:kitchening/features/recipe/presentation/view_model/single_recipe_cubit/cubit/single_recipe_cubit.dart';
 import 'package:kitchening/features/splash/presentation/view_model/splash_cubit.dart';
@@ -34,6 +39,7 @@ Future<void> initDependencies() async {
   await _initSharedPreferences();
 
   await _initRecipeScreensDependency();
+  await _initProfileScreenDependencies();
   await _initDashboardScreenDependencies();
   //dependencies like local repository and local datasource
   await _userLocalDependencies();
@@ -148,6 +154,26 @@ _initDashboardScreenDependencies() async {
   );
 }
 
+_initProfileScreenDependencies() async {
+  getIt.registerLazySingleton<ProfileRemoteDatasource>(
+    () => ProfileRemoteDatasource(dio: getIt()),
+  );
+
+  getIt.registerLazySingleton<ProfileRemoteRepository>(
+    () => ProfileRemoteRepository(datasource: getIt<ProfileRemoteDatasource>()),
+  );
+
+  getIt.registerLazySingleton<GetProfileUseCase>(
+    () => GetProfileUseCase(
+        profileRepository: getIt<ProfileRemoteRepository>(),
+        sharedPrefs: getIt<TokenSharedPrefs>()),
+  );
+
+  getIt.registerFactory<ProfileCubit>(
+    () => ProfileCubit(getProfileUseCase: getIt<GetProfileUseCase>()),
+  );
+}
+
 _initRecipeScreensDependency() async {
   await _recipeRemoteDependencies();
   getIt.registerLazySingleton<CreateRecipeUsecase>(
@@ -178,11 +204,18 @@ _initRecipeScreensDependency() async {
       recipeRepository: getIt<RecipeRemoteRepository>(),
     ),
   );
+  getIt.registerLazySingleton<UploadRecipeImageUsecase>(
+    () => UploadRecipeImageUsecase(
+      tokenSharedPrefs: getIt<TokenSharedPrefs>(),
+      remoteRepository: getIt<RecipeRemoteRepository>(),
+    ),
+  );
   getIt.registerFactory<SingleRecipeCubit>(
     () => SingleRecipeCubit(),
   );
   getIt.registerFactory<RecipeBloc>(
     () => RecipeBloc(
+      uploadRecipeImageUsecase: getIt<UploadRecipeImageUsecase>(),
       getUserAllRecipeUsecase: getIt<GetUserRecipeUsecase>(),
       getUserLikedRecipeUsecase: getIt<GetLikedRecipeUsecase>(),
       likeRecipeUsecase: getIt<LikeRecipeUsecase>(),

@@ -10,7 +10,9 @@ class ApiEndpoints {
   //========================Auth========================//
   static const String login = "user/login";
   static const String register = "user/register";
+  static const String singleUser = "user";
   static const String uploadImage = "user/uploadImage";
+  static const String profileImage = 'user/getProfileImage/';
 
   //========================Recipe========================//
   static const String createRecipe = "recipe";
@@ -18,6 +20,7 @@ class ApiEndpoints {
 
   //pass image name as params
   static const String recipeImage = 'recipe/getRecipeImage/';
+  static const String uploadRecipeImage = "recipe/uploadImage";
 
   //pass id as params
   static const String likeRecipe = "rating/recipe/";

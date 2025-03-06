@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kitchening/app/service_locator/service_locator.dart';
+import 'package:kitchening/features/recipe/presentation/view/recipe_detail_view.dart';
 import 'package:kitchening/features/recipe/presentation/view_model/all_recipe_bloc/recipe_bloc.dart';
 
 class FavoriteView extends StatefulWidget {
@@ -13,7 +15,7 @@ class _FavoriteViewState extends State<FavoriteView> {
   @override
   void initState() {
     super.initState();
-    context.read<RecipeBloc>().add(GetAllRecipeEvent());
+    context.read<RecipeBloc>().add(GetUserLikedRecipeEvent());
   }
 
   @override
@@ -37,6 +39,15 @@ class _FavoriteViewState extends State<FavoriteView> {
                     itemBuilder: (context, index) {
                       final recipe = state.recipes[index];
                       return ListTile(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  BlocProvider<RecipeBloc>.value(
+                                value: getIt(),
+                                child: RecipeDetailView(recipeEntity: recipe),
+                              ),
+                            )),
                         title: Text(recipe.recipeName),
                         subtitle: Text(recipe.cuisine),
                       );

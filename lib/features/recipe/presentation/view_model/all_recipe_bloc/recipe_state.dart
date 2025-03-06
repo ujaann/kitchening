@@ -7,14 +7,14 @@ sealed class RecipeState extends Equatable {
 }
 
 final class RecipeInitial extends RecipeState {
-  const RecipeInitial() : super(recipes: const []);
+  const RecipeInitial({super.imageName}) : super(recipes: const []);
 
   @override
   List<Object> get props => [];
 }
 
 final class RecipeLoading extends RecipeState {
-  const RecipeLoading({required super.recipes});
+  const RecipeLoading({required super.recipes, super.imageName});
 
   @override
   List<Object?> get props => [];
@@ -22,7 +22,7 @@ final class RecipeLoading extends RecipeState {
 
 final class RecipeSuccess extends RecipeState {
   @override
-  const RecipeSuccess({required super.recipes});
+  const RecipeSuccess({required super.recipes, super.imageName});
 
   @override
   List<Object> get props => [recipes];
@@ -30,7 +30,8 @@ final class RecipeSuccess extends RecipeState {
 
 final class RecipeError extends RecipeState {
   final String message;
-  const RecipeError({required this.message}) : super(recipes: const []);
+  const RecipeError({required this.message, super.imageName})
+      : super(recipes: const []);
   @override
   List<Object> get props => [message];
 }

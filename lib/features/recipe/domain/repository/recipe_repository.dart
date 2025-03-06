@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fpdart/fpdart.dart';
 import 'package:kitchening/core/error/failure.dart';
 import 'package:kitchening/features/recipe/domain/entity/recipe_entity.dart';
@@ -13,4 +15,6 @@ abstract interface class IRecipeRepository {
       String userId);
   Future<Either<ApiFailure, List<RecipeEntity>>> getUserLikedRecipe(
       String userId);
+
+  Future<Either<Failure, String>> uploadRecipePicture(File file, String token);
 }

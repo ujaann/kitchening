@@ -46,6 +46,7 @@ class _CreateRecipeScreenViewState extends State<CreateRecipeScreenView> {
       if (image != null) {
         setState(() {
           _img = File(image.path);
+          context.read<RecipeBloc>().add(UploadImageEvent(image: _img!));
         });
       } else {
         return;

@@ -67,6 +67,9 @@ ThemeData getApplicationTheme() {
       dividerTheme: const DividerThemeData(
         color: Colors.black26,
       ),
+      listTileTheme: const ListTileThemeData(
+        tileColor: papayaWhip,
+      ),
       inputDecorationTheme: const InputDecorationTheme(
           filled: true, fillColor: Color(0x99fefefe)));
 }
