@@ -1,96 +1,177 @@
 import 'package:flutter/material.dart';
 import 'package:kitchening/app/common/gap.dart';
+import 'package:kitchening/app/common/styles.dart';
+import 'package:kitchening/core/constants/api_endpoints.dart';
+import 'package:kitchening/features/recipe/domain/entity/recipe_entity.dart';
 
 class RecipeCard extends StatelessWidget {
-  const RecipeCard({super.key});
+  final RecipeEntity recipeEntity;
+  final VoidCallback onTap;
+  const RecipeCard({
+    super.key,
+    required this.recipeEntity,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 12,
+      elevation: 2,
       margin: const EdgeInsets.all(8),
       child: SizedBox(
-          height: 160,
-          width: MediaQuery.sizeOf(context).width * 0.9,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 24.0, left: 16, right: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Image.asset(
-                  "assets/images/momo.png",
-                  height: 120,
-                  width: 120,
+        // height: 160,
+        width: MediaQuery.sizeOf(context).width * 0.9,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: onTap,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(12)),
+                  child: SizedBox(
+                    width: 120,
+                    child: recipeEntity.imageName != null
+                        ? Image.network(
+                            "${ApiEndpoints.baseUrl}${ApiEndpoints.recipeImage}${recipeEntity.imageName}",
+                            height: 120,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            'assets/images/logo.png',
+                            height: 120,
+                            fit: BoxFit.cover,
+                          ),
+                  ),
                 ),
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+              ),
+              const SizedBox(width: 20),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Momo"),
+                    Text(
+                      recipeEntity.recipeName,
+                      overflow: TextOverflow.fade,
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
                     Row(
                       children: [
-                        Text("Difficulty:"),
-                        Icon(Icons.star_rate),
-                        Icon(Icons.star_rate),
-                        Icon(Icons.star_rate),
-                        Icon(Icons.star_rate_outlined),
+                        Text(
+                          "Steps: ${recipeEntity.steps.length}",
+                          overflow: TextOverflow.fade,
+                        ),
                       ],
                     ),
                     Row(
                       children: [
-                        Text("Rating:"),
-                        Icon(Icons.star_rate),
-                        Icon(Icons.star_rate),
-                        Icon(Icons.star_rate),
-                        Icon(Icons.star_rate_outlined),
+                        Text(
+                          "Likes: ${recipeEntity.likeCount}",
+                          overflow: TextOverflow.fade,
+                        ),
                       ],
                     ),
-                    Text("Ujan Sthapit"),
+                    Text(
+                      recipeEntity.user.username,
+                      overflow: TextOverflow.fade,
+                    ),
                   ],
                 ),
-                gap8X,
-              ],
-            ),
-          )),
+              ),
+              gap8X,
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
 
 class SmallRecipeCard extends StatelessWidget {
-  const SmallRecipeCard({super.key});
+  final RecipeEntity recipeEntity;
+  final VoidCallback onIconPressed;
+
+  const SmallRecipeCard({
+    super.key,
+    required this.recipeEntity,
+    required this.onIconPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 12,
+      elevation: 2,
       margin: const EdgeInsets.all(8),
-      child: SizedBox(
-          height: 160,
-          width: MediaQuery.sizeOf(context).width * 0.48,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Image.asset(
-                    "assets/images/fry_rice.png",
-                    height: 120,
-
-                    fit: BoxFit.cover,
-                    // color: Colors.black,
+      child: Container(
+        height: 160,
+        width: 160,
+        padding: const EdgeInsets.all(2.0),
+        child: Stack(
+          children: [
+            Center(
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                child: SizedBox(
+                  width: 150,
+                  height: 150,
+                  child: recipeEntity.imageName != null
+                      ? Image.network(
+                          "${ApiEndpoints.baseUrl}${ApiEndpoints.recipeImage}${recipeEntity.imageName}",
+                          height: 120,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset(
+                          'assets/images/logo.png',
+                          height: 120,
+                          fit: BoxFit.cover,
+                        ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(12),
+                  bottomRight: Radius.circular(12),
+                ),
+                child: ColoredBox(
+                  color: caribeanCurrent,
+                  child: SizedBox(
+                    width: 150,
+                    height: 50,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            " ${recipeEntity.recipeName}",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.arrow_forward,
+                            size: 20,
+                            color: Colors.white,
+                          ),
+                          onPressed: onIconPressed,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Chicken Fried Rice"),
-                    Icon(Icons.favorite_outline),
-                  ],
-                )
-              ],
+              ),
             ),
-          )),
+          ],
+        ),
+      ),
     );
   }
 }

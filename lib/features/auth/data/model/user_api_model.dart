@@ -1,16 +1,17 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:kitchening/features/auth/domain/entity/user_entity.dart';
 
 @JsonSerializable()
-class UserApiModel {
+class UserApiModel extends Equatable {
   @JsonKey(name: '_id')
-  String? id;
-  String username;
-  String password;
-  String? image;
-  String email;
+  final String? id;
+  final String username;
+  final String password;
+  final String? image;
+  final String email;
 
-  UserApiModel({
+  const UserApiModel({
     this.id,
     required this.username,
     required this.password,
@@ -51,4 +52,7 @@ class UserApiModel {
         "image": image,
         "email": email,
       };
+
+  @override
+  List<Object?> get props => [id, username];
 }

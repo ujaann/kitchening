@@ -2,18 +2,32 @@ part of 'dashboard_cubit.dart';
 
 class DashboardState extends Equatable {
   final int selectedIndex;
-  final List<Widget> views = const [
-    HomeView(),
-    LibraryView(),
-    ProfileView(),
-    SettingsView(),
+  final List<Widget> views = [
+    BlocProvider<RecipeBloc>.value(
+      value: getIt(),
+      child: const HomeView(),
+    ),
+    BlocProvider<RecipeBloc>.value(value: getIt(), child: const FavoriteView()),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<RecipeBloc>.value(
+          value: getIt(),
+        ),
+        BlocProvider<SingleRecipeCubit>.value(
+          value: getIt(),
+        ),
+      ],
+      child: const CreateRecipeScreenView(),
+    ),
+    BlocProvider<RecipeBloc>.value(value: getIt(), child: const LibraryView()),
+    const SettingsView(),
   ];
 
-  const DashboardState({
+  DashboardState({
     required this.selectedIndex,
   });
 
-  const DashboardState.initial() : selectedIndex = 0;
+  DashboardState.initial() : selectedIndex = 0;
 
   DashboardState copyWith({
     int? selectedIndex,
